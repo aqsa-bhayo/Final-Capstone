@@ -12,6 +12,7 @@ import App from './App.js';
 import Restaurants from './components/SectionTwo/Resturants/Resturants.jsx';
 import RestaurantFood from './components/SectionTwo/RestaurantFood/RestaurantFood.jsx';
 import Favourite from './components/SectionTwo/Favourite/Favourite.jsx'
+import FootDetailPage from './components/SectionTwo/FootDetailPage/FootDetailPage.jsx';
 // import RestaurantItems from './components/SectionTwo/RestaurantItems/RestaurantItems.jsx'; // Import RestaurantItems component for dynamic routes
 
 const router = createBrowserRouter([
@@ -39,14 +40,19 @@ const router = createBrowserRouter([
     path: "/RestaurantFood", // Static route for city-specific restaurant pages
     element: <RestaurantFood />,
   },
-  {
-    path: "/restaurant/:id", // Dynamic route for individual restaurant details
-    element: <RestaurantFood />,
-  },
+  // {
+  //   path: "/restaurant/:id", // Dynamic route for individual restaurant details
+  //   element: <RestaurantFood />,
+  // },
   {
     path: "/favourite", // Dynamic route for individual restaurant details
     element: <Favourite />,
   },
+  {
+    path:"/FootDetailPage",
+    element: <FootDetailPage/>
+  }
+
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

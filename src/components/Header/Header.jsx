@@ -13,7 +13,7 @@ import {
   Container,
 } from '@mui/material';
 import {
-  FavoriteBorder,
+  Favorite,
   ShoppingCart,
   AccountCircle,
   MoreVert,
@@ -247,6 +247,13 @@ export default function PrimarySearchAppBar() {
                     <ShoppingBagIcon />
                   </Badge>
                 </IconButton>
+
+                {/* Favorite Icon - Heart Shape */}
+                <IconButton sx={{ color: 'black' }} onClick={() => navigate('/favourite')}>
+                  <Badge badgeContent={4} color="error">
+                    <Favorite /> {/* Heart Icon */}
+                  </Badge>
+                </IconButton>
               </Box>
             )}
           </Toolbar>
@@ -256,9 +263,7 @@ export default function PrimarySearchAppBar() {
       {renderLanguageMenu}
 
       {/* Add margin-top to content to avoid overlap with fixed AppBar */}
-      <Box sx={{ marginTop: '64px' }}>
-        {/* Your main content here */}
-      </Box>
+      <Box sx={{ marginTop: '64px' }}></Box>
     </Box>
   );
 }

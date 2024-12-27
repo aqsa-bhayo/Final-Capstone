@@ -50,13 +50,16 @@ const Restaurants = () => {
 
   // Add or remove from favorites and navigate to favorites page
   const toggleFavorite = (restaurant) => {
+    console.log("Toggling favorite for:", restaurant); // Add a console log to check the restaurant being toggled
     if (isFavorite(restaurant)) {
-      dispatch(removeFavorite(restaurant.id));
+      console.log("Removing from favorites", restaurant.id); // Check if it's being removed
+      dispatch(removeFavorite(restaurant.id));  // Remove from favorites
     } else {
-      dispatch(addFavorite(restaurant));
+      console.log("Adding to favorites", restaurant); // Check if it's being added
+      dispatch(addFavorite(restaurant));  // Add to favorites
     }
     // Navigate to the favorites page after toggling favorite status
-    navigate("/favourite");
+    navigate(""); // Change the navigate path if needed
   };
 
   return (

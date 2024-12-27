@@ -1,24 +1,27 @@
+// redux/slices/favoritesSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  items: [],
-};
-
-const favouriteSlice = createSlice({
+// Creating the favorites slice
+export const favoritesSlice = createSlice({
   name: 'favorites',
-  initialState,
+  initialState: {
+    items: [], // List of favorite restaurants
+  },
   reducers: {
+    // Add a new favorite to the list if it doesn't already exist
     addFavorite: (state, action) => {
-      const exists = state.items.find((item) => item.id === action.payload.id);
-      if (!exists) {
-        state.items.push(action.payload);
-      }
+      state.items.push(action.payload);
     },
+    
+    // Remove a favorite by its id
     removeFavorite: (state, action) => {
-      state.items = state.items.filter((item) => item.id !== action.payload);
+      state.items = state.items.filter(item => item.id !== action.payload);
     },
   },
 });
 
-export const { addFavorite, removeFavorite } = favouriteSlice.actions;
-export default favouriteSlice.reducer;
+// Exporting the actions to dispatch them in the component
+export const { addFavorite, removeFavorite } = favoritesSlice.actions;
+
+// Exporting the reducer for the store configuration
+export default favoritesSlice.reducer;
