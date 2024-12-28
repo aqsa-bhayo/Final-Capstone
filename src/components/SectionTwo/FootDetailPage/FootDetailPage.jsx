@@ -92,12 +92,32 @@ function FootDetailPage() {
                     </div>
                 </div>
 
+                <hr />
+
+                <section style={{ padding: '20px' }}>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#333', marginBottom: '20px' }}>
+                        Available deals
+                    </div>
+
+                    <div>
+                        <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#333', marginBottom: '8px' }}>
+                            10% off
+                        </div>
+                        <div style={{ fontSize: '0.875rem', color: '#666' }}>
+                            Min. order Rs. 299. Valid for selected items. Auto applied.
+                        </div>
+                    </div>
+                </section>
+                <hr />
+
                 {/* Tabs Section */}
                 <div
+                    className="tabs-container"
                     style={{
                         display: 'flex',
                         justifyContent: 'space-around',
                         marginBottom: '30px',
+                        marginTop: '90px',
                         backgroundColor: '#f8f8f8',
                         padding: '10px',
                         borderRadius: '8px',
@@ -140,85 +160,92 @@ function FootDetailPage() {
                                     }}
                                 >
                                     {menuItems[category].map((item) => (
-                                  <div key={item.id} style={{
-                                    border: '1px solid #eee',
-                                    borderRadius: '12px', // Added border radius for rounded corners
-                                    padding: '20px',
-                                    textAlign: 'center',
-                                    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'space-between', // Ensures that content is spaced out properly
-                                    height: '450px', // Fixed height to ensure uniformity
-                                    backgroundColor: '#fff',
-                                    boxSizing: 'border-box', // Ensures padding doesn't affect overall height
-                                    overflow: 'hidden', // Prevents any content overflow
-                                }}>
-                                
-                                    {/* Image Section */}
-                                    <img src={item.image} alt={item.name} style={{
-                                        width: '200px',
-                                        height: '200px',
-                                        objectFit: 'cover',
-                                        marginBottom: '15px',
-                                        borderRadius: '8px',
-                                        alignSelf: 'center', // Centers the image
-                                    }} />
-                                
-                                    {/* Title Section */}
-                                    <h3 style={{
-                                        fontSize: '16px',
-                                        margin: '5px 0',
-                                        color: '#333',
-                                        fontWeight: 'bold',
-                                    }}>
-                                        {item.name}
-                                    </h3>
-                                
-                                    {/* Price Section */}
-                                    <p style={{
-                                        fontSize: '14px',
-                                        color: '#555',
-                                        margin: '5px 0',
-                                    }}>
-                                        {item.price} <span style={{
-                                            textDecoration: 'line-through',
-                                            color: '#999',
-                                        }}>Rs. 695</span>
-                                    </p>
-                                
-                                    {/* Description Section */}
-                                    <p style={{
-                                        fontSize: '12px',
-                                        color: '#777',
-                                        margin: '5px 0',
-                                        height: '50px', // Make sure description area has fixed height if needed
-                                        overflow: 'hidden',
-                                    }}>
-                                        {item.description}
-                                    </p>
-                                
-                                    {/* Add to Cart Button */}
-                                    <button style={{
-                                        padding: '10px 20px',
-                                        backgroundColor: '#ff3366',
-                                        color: '#fff',
-                                        border: 'none',
-                                        borderRadius: '8px', // Rounded corners for the button
-                                        cursor: 'pointer',
-                                        marginTop: 'auto', // Keeps button at the bottom of the card
-                                        fontSize: '14px',
-                                        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-                                        transition: 'background-color 0.3s', // Smooth hover effect
-                                    }}
-                                    onMouseOver={(e) => e.target.style.backgroundColor = '#e02a56'}
-                                    onMouseOut={(e) => e.target.style.backgroundColor = '#ff3366'}
-                                    >
-                                        Add to Cart
-                                    </button>
-                                </div>
-                                
-                                    
+                                        <div key={item.id} style={{
+                                            border: '1px solid #eee',
+                                            borderRadius: '12px',
+                                            padding: '20px',
+                                            textAlign: 'center',
+                                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            justifyContent: 'space-between',
+                                            height: '450px', // Make sure all cards have the same height
+                                            backgroundColor: '#fff',
+                                            boxSizing: 'border-box',
+                                            overflow: 'hidden',
+                                        }}>
+                                            {/* Image Section */}
+                                            <img
+                                                src={item.image}
+                                                alt={item.name}
+                                                style={{
+                                                    width: '200px',
+                                                    height: '200px',
+                                                    objectFit: 'cover',
+                                                    marginBottom: '15px',
+                                                    borderRadius: '8px',
+                                                    alignSelf: 'center',
+                                                }}
+                                            />
+
+                                            {/* Title Section */}
+                                            <h3 style={{
+                                                fontSize: '16px',
+                                                margin: '5px 0',
+                                                color: '#333',
+                                                fontWeight: 'bold',
+                                            }}>
+                                                {item.name}
+                                            </h3>
+
+                                            {/* Price Section */}
+                                            <p style={{
+                                                fontSize: '14px',
+                                                color: '#555',
+                                                margin: '5px 0',
+                                            }}>
+                                                {item.price}
+                                                <span style={{
+                                                    textDecoration: 'line-through',
+                                                    color: '#999',
+                                                }}>
+                                                    Rs. 695
+                                                </span>
+                                            </p>
+
+                                            {/* Description Section */}
+                                            <p style={{
+                                                fontSize: '12px',
+                                                color: '#777',
+                                                margin: '5px 0',
+                                                height: '50px', // Fixed height for description
+                                                overflow: 'hidden', // Prevents description from overflowing
+                                            }}>
+                                                {item.description}
+                                            </p>
+
+                                            {/* Add to Cart Button */}
+                                            <button
+                                                style={{
+                                                    padding: '10px 20px',
+                                                    backgroundColor: '#ff3366',
+                                                    color: '#fff',
+                                                    border: 'none',
+                                                    borderRadius: '8px',
+                                                    cursor: 'pointer',
+                                                    marginTop: 'auto', // Keeps button at the bottom of the card
+                                                    fontSize: '14px',
+                                                    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+                                                    transition: 'background-color 0.3s',
+                                                }}
+                                                onMouseOver={(e) => e.target.style.backgroundColor = '#e02a56'}
+                                                onMouseOut={(e) => e.target.style.backgroundColor = '#ff3366'}
+                                            >
+                                                Add to Cart
+                                            </button>
+                                        </div>
+
+
                                     ))}
                                 </div>
                             </div>
@@ -239,41 +266,85 @@ function FootDetailPage() {
                                 {menuItems[activeTab]?.map((item) => (
                                     <div key={item.id} style={{
                                         border: '1px solid #eee',
-                                        borderRadius: '8px',
+                                        borderRadius: '12px',
                                         padding: '20px',
                                         textAlign: 'center',
                                         boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-                                        height: '380px',
                                         display: 'flex',
                                         flexDirection: 'column',
                                         justifyContent: 'space-between',
+                                        height: '450px', // Make sure all cards have the same height
+                                        backgroundColor: '#fff',
+                                        boxSizing: 'border-box',
+                                        overflow: 'hidden',
                                     }}>
-                                        <img src={item.image} alt={item.name} style={{
-                                            width: '200px',
-                                            height: '200px',
-                                            objectFit: 'cover',
-                                            marginBottom: '15px',
-                                            borderRadius: '8px',
-                                            alignSelf: 'center',
-                                        }} />
-                                        <h3 style={{ fontSize: '16px', margin: '5px 0', color: '#333' }}>
+                                        {/* Image Section */}
+                                        <img
+                                            src={item.image}
+                                            alt={item.name}
+                                            style={{
+                                                width: '200px',
+                                                height: '200px',
+                                                objectFit: 'cover',
+                                                marginBottom: '15px',
+                                                borderRadius: '8px',
+                                                alignSelf: 'center',
+                                            }}
+                                        />
+
+                                        {/* Title Section */}
+                                        <h3 style={{
+                                            fontSize: '16px',
+                                            margin: '5px 0',
+                                            color: '#333',
+                                            fontWeight: 'bold',
+                                        }}>
                                             {item.name}
                                         </h3>
-                                        <p style={{ fontSize: '14px', color: '#555', margin: '5px 0' }}>
-                                            {item.price} <span style={{ textDecoration: 'line-through', color: '#999' }}>Rs. 695</span>
-                                        </p>
-                                        <p style={{ fontSize: '12px', color: '#777' }}>{item.description}</p>
-                                        <button style={{
-                                            padding: '10px 20px',
-                                            backgroundColor: '#ff3366',
-                                            color: '#fff',
-                                            border: 'none',
-                                            borderRadius: '8px',
-                                            cursor: 'pointer',
-                                            marginTop: 'auto',
+
+                                        {/* Price Section */}
+                                        <p style={{
                                             fontSize: '14px',
-                                            boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+                                            color: '#555',
+                                            margin: '5px 0',
                                         }}>
+                                            {item.price}
+                                            <span style={{
+                                                textDecoration: 'line-through',
+                                                color: '#999',
+                                            }}>
+                                                Rs. 695
+                                            </span>
+                                        </p>
+
+                                        {/* Description Section */}
+                                        <p style={{
+                                            fontSize: '12px',
+                                            color: '#777',
+                                            margin: '5px 0',
+                                            height: '50px', // Fixed height for description
+                                            overflow: 'hidden', // Prevents description from overflowing
+                                        }}>
+                                            {item.description}
+                                        </p>
+
+                                        {/* Add to Cart Button */}
+                                        <button
+                                            style={{
+                                                padding: '10px 20px',
+                                                backgroundColor: '#ff3366',
+                                                color: '#fff',
+                                                border: 'none',
+                                                borderRadius: '8px',
+                                                cursor: 'pointer',
+                                                marginTop: 'auto', // Keeps button at the bottom of the card
+                                                fontSize: '14px',
+                                                boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+                                                transition: 'background-color 0.3s',
+                                            }}
+                                            onMouseOver={(e) => e.target.style.backgroundColor = '#e02a56'}
+                                            onMouseOut={(e) => e.target.style.backgroundColor = '#ff3366'}
+                                        >
                                             Add to Cart
                                         </button>
                                     </div>

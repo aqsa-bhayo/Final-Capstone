@@ -28,11 +28,11 @@ const Restaurants = () => {
   const favorites = useSelector((state) => state.favorites.items);  // Fetch favorites from Redux state
 
   const restaurantsSectionOne = [
-    { id: 1, name: "Grilled Peri Peri Cholley", category: "Grilled", rating: "6.0", discount1: "25% off Rs. 199", discount2: "Limited Time: Free Delivery", image: dishOne },
-    { id: 2, name: "Star Haleem", category: "Pasta", rating: "6.0", discount1: "Buy 1 Get 1 Free", discount2: "Flat Rs. 50 Off on First Order", image: dishTwo },
-    { id: 3, name: "Fresh Sabzi", category: "Beverages", rating: "6.0", discount1: "20% off on All Orders", discount2: "Extra Rs. 100 Off on Rs. 500+", image: dishThree },
-    { id: 4, name: "Spicy Burger", category: "Pakistani", rating: "6.0", discount1: "Free Fries with Each Order", discount2: "Rs. 30 Cashback on Payment via Card", image: dishFour },
-    { id: 5, name: "Traditional Roti Salan Combo", category: "Fast Food", rating: "6.0", discount1: "Flat Rs. 150 Off", discount2: "Complimentary Dessert on Orders Rs. 500+", image: dishFive },
+    { id: 1, name: "Roobi's Kitchen", category: "Grilled", rating: "6.0", discount1: "25% off Rs. 199", discount2: "Limited Time: Free Delivery", image: dishOne },
+    { id: 2, name: "Sitto's Kitchen", category: "Pasta", rating: "6.0", discount1: "Buy 1 Get 1 Free", discount2: "Flat Rs. 50 Off on First Order", image: dishTwo },
+    { id: 3, name: "Quetta Paratha Center", category: "Beverages", rating: "6.0", discount1: "20% off on All Orders", discount2: "Extra Rs. 100 Off on Rs. 500+", image: dishThree },
+    { id: 4, name: "Spicy Burger Center", category: "Pakistani", rating: "6.0", discount1: "Free Fries with Each Order", discount2: "Rs. 30 Cashback on Payment via Card", image: dishFour },
+    { id: 5, name: "Traditional Roti Salan Restaurant", category: "Fast Food", rating: "6.0", discount1: "Flat Rs. 150 Off", discount2: "Complimentary Dessert on Orders Rs. 500+", image: dishFive },
     { id: 6, name: "AA-2 Food Center", category: "Pakistani", rating: "6.0", discount1: "15% off on Lunch Hours", discount2: "Earn Double Loyalty Points Today", image: dishSix },
   ];
 

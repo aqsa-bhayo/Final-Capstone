@@ -40,10 +40,10 @@ const router = createBrowserRouter([
     path: "/RestaurantFood", // Static route for city-specific restaurant pages
     element: <RestaurantFood />,
   },
-  // {
-  //   path: "/restaurant/:id", // Dynamic route for individual restaurant details
-  //   element: <RestaurantFood />,
-  // },
+  {
+    path: "/restaurant/:id", // Dynamic route for individual restaurant details
+    element: <RestaurantFood />,
+  },
   {
     path: "/favourite", // Dynamic route for individual restaurant details
     element: <Favourite />,
