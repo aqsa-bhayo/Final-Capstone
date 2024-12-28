@@ -11,6 +11,10 @@ import {
   MenuItem,
   useMediaQuery,
   Container,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
 } from '@mui/material';
 import {
   Favorite,
@@ -26,6 +30,7 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Person2Icon from '@mui/icons-material/Person2';
 import LogoutIcon from '@mui/icons-material/Logout';
+import CartList from '../Cart-list/Cart';
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -33,6 +38,8 @@ export default function PrimarySearchAppBar() {
   const [languageAnchorEl, setLanguageAnchorEl] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
+  const [cartItems, setCartItems] = useState([]); // State to track cart items
+  const [drawerOpen, setDrawerOpen] = useState(false); // State to control drawer visibility
 
   const theme = useTheme();
   const navigate = useNavigate();
@@ -45,6 +52,22 @@ export default function PrimarySearchAppBar() {
       setUserName(savedUser.name); // Assuming user data is saved during login/signup
     }
   }, []);
+
+  // Add item to the cart
+  const AddToCart = (item) => {
+    setCartItems((prevItems) => {
+      // Check if the item already exists in the cart
+      const itemExists = prevItems.some(cartItem => cartItem.id === item.id);
+      if (!itemExists) {
+        const updatedCart = [...prevItems, item];
+        console.log("Updated Cart:", updatedCart); // Log to see if the cart updates correctly
+        return updatedCart;
+      } else {
+        console.log("Item already in cart");
+        return prevItems; // Return existing cart if item already added
+      }
+    });
+  };
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -72,15 +95,18 @@ export default function PrimarySearchAppBar() {
 
   // Updated handleLogout function
   const handleLogout = () => {
-    // Remove the user from localStorage
     localStorage.removeItem('user');
-    
-    // Update the state to reflect the logout action
     setIsLoggedIn(false);
     setUserName('');
-    
-    // Navigate to the sign-in page after state update
     navigate('/');
+  };
+
+  const handleCartClick = () => {
+    setDrawerOpen(true); // Open the drawer when the cart icon is clicked
+  };
+
+  const handleDrawerClose = () => {
+    setDrawerOpen(false); // Close the drawer when clicking outside or pressing close
   };
 
   const menuId = 'primary-search-account-menu';
@@ -94,7 +120,6 @@ export default function PrimarySearchAppBar() {
       open={Boolean(anchorEl)}
       onClose={handleProfileMenuClose}
     >
-      {/* Removed "My Profile" MenuItem */}
       <MenuItem onClick={handleLogout}>
         <LogoutIcon sx={{ marginRight: 1 }} />
         Logout
@@ -117,9 +142,8 @@ export default function PrimarySearchAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* Make AppBar fixed at the top */}
       <AppBar
-        position="fixed"  // Change position to fixed
+        position="fixed"
         sx={{
           backgroundColor: '#ffffff',
           color: '#000000',
@@ -139,14 +163,7 @@ export default function PrimarySearchAppBar() {
               alignItems: 'center',
             }}
           >
-            {/* Left Section - Logo */}
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                flexGrow: 1,
-              }}
-            >
+            <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
               <img src={logo} alt="foodpanda" style={{ height: 30 }} />
               <Typography
                 variant="h6"
@@ -161,109 +178,124 @@ export default function PrimarySearchAppBar() {
               </Typography>
             </Box>
 
-            {/* Right Section - User and Icons */}
-            {isMobile ? (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {!isLoggedIn ? (
+                <>
+                  <Button
+                    sx={{
+                      color: '#000000',
+                      display: 'flex',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                      marginRight: 2,
+                      border: '1px solid #000000',
+                      borderRadius: 2,
+                      px: 3,
+                    }}
+                    onClick={() => navigate('/sign-in')}
+                  >
+                    Log in
+                  </Button>
+                  <Button
+                    sx={{
+                      color: 'white',
+                      display: 'flex',
+                      alignItems: 'center',
+                      backgroundColor: '#c21760',
+                      marginRight: 2,
+                      border: '1px black #ff3366',
+                      borderRadius: 2,
+                      px: 3,
+                    }}
+                    onClick={() => navigate('/sign-up')}
+                  >
+                    Sign up
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Typography variant="h6" sx={{ marginRight: 2 }}>
+                    <Person2Icon /> {userName}
+                  </Typography>
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    sx={{ color: 'black' }}
+                  >
+                    <LogoutIcon />
+                  </IconButton>
+                </>
+              )}
+
               <IconButton
                 size="large"
-                aria-label="show more"
-                aria-controls="primary-search-account-menu-mobile"
+                aria-label="change language"
                 aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
+                onClick={handleLanguageMenuOpen}
+                sx={{ color: 'black', marginRight: 2 }}
               >
-                <MoreVert />
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <LanguageIcon />
+                  <Typography sx={{ marginLeft: 0.5 }}>EN</Typography>
+                  <KeyboardArrowDownIcon sx={{ marginLeft: 0.5 }} />
+                </Box>
               </IconButton>
-            ) : (
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                {!isLoggedIn ? (
-                  <>
-                    <Button
-                      sx={{
-                        color: '#000000',
-                        display: 'flex',
-                        alignItems: 'center',
-                        textAlign: 'center',
-                        marginRight: 2,
-                        border: '1px solid #000000',
-                        borderRadius: 2,
-                        px: 3,
-                      }}
-                      onClick={() => navigate('/sign-in')}
-                    >
-                      Log in
-                    </Button>
-                    <Button
-                      sx={{
-                        color: 'white',
-                        display: 'flex',
-                        alignItems: 'center',
-                        backgroundColor: '#c21760',
-                        marginRight: 2,
-                        border: '1px black #ff3366',
-                        borderRadius: 2,
-                        px: 3,
-                      }}
-                      onClick={() => navigate('/sign-up')}
-                    >
-                      Sign up
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Typography variant="h6" sx={{ marginRight: 2 }}>
-                      <Person2Icon /> {userName}
-                    </Typography>
-                    <IconButton
-                      size="large"
-                      aria-label="account of current user"
-                      aria-controls={menuId}
-                      aria-haspopup="true"
-                      onClick={handleProfileMenuOpen}
-                      sx={{ color: 'black' }}
-                    >
-                      <LogoutIcon />
-                    </IconButton>
-                  </>
-                )}
 
-                {/* Language Selector */}
-                <IconButton
-                  size="large"
-                  aria-label="change language"
-                  aria-haspopup="true"
-                  onClick={handleLanguageMenuOpen}
-                  sx={{ color: 'black', marginRight: 2 }}
-                >
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <LanguageIcon />
-                    <Typography sx={{ marginLeft: 0.5 }}>EN</Typography>
-                    <KeyboardArrowDownIcon sx={{ marginLeft: 0.5 }} />
-                  </Box>
-                </IconButton>
+              <IconButton size="large" aria-label="show cart items" color="inherit" onClick={handleCartClick}>
+                <Badge badgeContent={cartItems.length} color="error">
+                  <ShoppingBagIcon />
+                </Badge>
+              </IconButton>
 
-                {/* Shopping Cart */}
-                <IconButton sx={{ color: 'black' }}>
-                  <Badge badgeContent={4} color="error">
-                    <ShoppingBagIcon />
-                  </Badge>
-                </IconButton>
-
-                {/* Favorite Icon - Heart Shape */}
-                <IconButton sx={{ color: 'black' }} onClick={() => navigate('/favourite')}>
-                  <Badge badgeContent={4} color="error">
-                    <Favorite /> {/* Heart Icon */}
-                  </Badge>
-                </IconButton>
-              </Box>
-            )}
+              <IconButton sx={{ color: 'black' }} onClick={() => navigate('/favourite')}>
+                <Badge badgeContent={0} color="error">
+                  <Favorite />
+                </Badge>
+              </IconButton>
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>
+
       {renderProfileMenu}
       {renderLanguageMenu}
 
-      {/* Add margin-top to content to avoid overlap with fixed AppBar */}
       <Box sx={{ marginTop: '64px' }}></Box>
+
+      {/* Cart Drawer */}
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={handleDrawerClose}
+      >
+        <Box
+          sx={{
+            width: 350,
+            padding: 20,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <Typography variant="h6">Cart Items</Typography>
+          <List>
+            {cartItems.length > 0 ? (
+              cartItems.map((item, index) => (
+                <ListItem key={index}>
+                  <ListItemText
+                    primary={item.name}
+                    secondary={`Rs. ${item.price}`}
+                  />
+                </ListItem>
+              ))
+            ) : (
+              <Typography>No items in cart</Typography>
+            )}
+          </List>
+        </Box>
+      </Drawer>
     </Box>
   );
 }

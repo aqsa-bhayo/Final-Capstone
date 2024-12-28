@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Burger from "../../../assets/burger.jpg";
 import Container from "@mui/material/Container";
@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
-import { addFavorite } from "../../../redux/ProductsSlice";
+import { addFavorite, addToCart } from "../../../redux/ProductsSlice";
 import sandwichImage from '../../../assets/sendwichch.jpg';
 import cheesyFriesImage from '../../../assets/cheesy fries.jpg';
 import chickenWingsImage from '../../../assets/chicken wings.jpg';
@@ -29,6 +29,9 @@ import strawberryShakeImage from '../../../assets/strawberry shake.jpg';
 import cocoColaImage from '../../../assets/coco cola.jpg';
 import spriteImage from '../../../assets/sprite.jpg';
 import fantaImage from '../../../assets/fanta.jpg';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Tooltip } from "@mui/material";
+
 
 const RestaurantFood = () => {
 
@@ -167,9 +170,9 @@ const RestaurantFood = () => {
             { id: 4, name: 'Spring Rolls', price: 'Rs. 200', oldPrice: 'Rs. 250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
           ],
         },
-      ]      
+      ]
     },
-       
+
 
     // 3rd retaurant
     {
@@ -233,7 +236,7 @@ const RestaurantFood = () => {
             { id: 4, name: 'Spring Rolls', price: 'Rs. 200', oldPrice: 'Rs. 250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
           ],
         },
-      ]      
+      ]
     },
 
     // restuarant
@@ -298,7 +301,7 @@ const RestaurantFood = () => {
             { id: 2, name: 'Veggie Burger', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
           ],
         },
-      ]      
+      ]
     },
     {
       id: 5,
@@ -362,7 +365,7 @@ const RestaurantFood = () => {
           ],
         },
       ]
-      
+
     },
     {
       id: 6,
@@ -426,13 +429,43 @@ const RestaurantFood = () => {
           ],
         },
       ]
-      
+
     },
   ];
 
   const restaurant = restaurants.find((rest) => rest.id === parseInt(id));
 
+  const [activeTab, setActiveTab] = useState('All');
+  const [cartList, setCartList] = useState([]);
+  const [openAlert, setOpenAlert] = useState(false);
 
+  useEffect(() => {
+
+    const storedCart = JSON.parse(localStorage.getItem("cartList"));
+    if (storedCart) {
+      setCartList(storedCart);
+    }
+  }, []);
+
+  const cartHandler = (product) => {
+    const isExist = cartList.find((cart) => cart.id === product.id);
+    if (!isExist) {
+      setCartList((prev) => [...prev, product]);
+
+      let strCartList = JSON.stringify([...cartList, product]);
+      localStorage.setItem("cartList", strCartList);
+    } else {
+      setOpenAlert(true);
+    }
+  };
+
+   // Handle close for the Snackbar alert
+   const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlert(false);
+  };
   if (!restaurant) {
     return (
       <>
@@ -453,54 +486,125 @@ const RestaurantFood = () => {
   return (
     <>
       <Header />
+
+      {/* Restaurant Details */}
       <div className="p-6">
-        <h1 className="text-2xl font-bold mb-6">{restaurant.name}</h1>
-        {restaurant.products.map((product, productIndex) => (
-          <div key={productIndex} className="mb-4">
-            <Container maxWidth="xl">
-              <h2 className="text-xl font-semibold mb-2">{product.title}</h2>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {product.items.map((item) => (
-                  <div
-                    key={item.id}
-                    className="p-4 border rounded flex justify-between"
-                  >
-                    <div>
-                      <h3 className="text-lg font-medium">{item.name}</h3>
-                      <p className="text-sm text-gray-600">{item.details}</p>
-                      <div className="mt-2">
-                        <p className="text-lg font-bold text-blue-500">
-                          Rs. {item.price}
-                        </p>
-                        {item.oldPrice && (
-                          <p className="text-sm text-gray-500 line-through">
-                            Rs. {item.oldPrice}
-                          </p>
-                        )}
-                      </div>
-                      <Button
-                        variant="text"
-                        color="primary"
-                        onClick={() => AddToCart(item)}
-                      >
-                        purchase
-                      </Button>
-                    </div>
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="aspect-square w-32 object-cover rounded mb-2"
-                    />
-                  </div>
-                ))}
-              </ul>
-            </Container>
-          </div>
+        <h1 className="text-2xl font-bold mb-6 text-center" style={{ color: ' #ff3366' }}>{restaurant.name}</h1>
+        <p className="text-md text-gray-600">{restaurant.description}</p>
+      </div>
+
+      {/* Tabs Section */}
+      <div
+        className="tabs-container"
+        style={{
+          display: 'flex',
+          justifyContent: 'space-evenly',
+          marginBottom: '30px',
+          marginTop: '40px',
+          backgroundColor: '#f8f8f8',
+          padding: '10px',
+          borderRadius: '8px',
+          width: '77%',
+          marginLeft: '12.5%',
+          marginRight: 'auto',
+        }}
+      >
+        {['All', 'Popular', 'Starters', 'Premium Burgers', 'Classic Burgers', 'Fries', 'Shakes', 'Beverages'].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            style={{
+              border: 'none',
+              background: 'none',
+              padding: '10px 20px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              color: '#ff3366',
+              fontWeight: activeTab === tab ? 'bold' : 'normal',
+              borderBottom: activeTab === tab ? '2px solid #ff3366' : 'none',
+              flex: 1,
+              textAlign: 'center',
+            }}
+          >
+            {tab}
+          </button>
         ))}
+      </div>
+
+      {/* Product List */}
+      <div className="p-6">
+        {restaurant.products
+          .filter((product) => activeTab === 'All' || product.title === activeTab) // Filter products based on the active tab
+          .map((product, productIndex) => (
+            <div key={productIndex} className="mb-4">
+              <Container maxWidth="xl">
+                {/* Adjusted title alignment to left */}
+                <div className="text-left">
+                  <h2 className="text-xl font-semibold mb-2 ms-5" style={{ color: '#ff3366' }}>{product.title}</h2>
+                </div>
+                {/* Mobile responsive grid */}
+                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {product.items.map((item) => (
+                    <div key={item.id} className="p-4 border rounded flex flex-col sm:flex-row justify-between">
+                      <div className="sm:w-1/2"> {/* Adjusts width for larger screens */}
+                        <h3 className="text-lg font-medium">{item.name}</h3>
+                        <p className="text-sm text-gray-600">{item.description}</p>
+                        <div className="mt-2">
+                          <p className="text-lg font-bold text-blue-500">Rs. {item.price}</p>
+                          {item.oldPrice && (
+                            <p className="text-sm text-gray-500 line-through">
+                              Rs. {item.oldPrice}
+                            </p>
+                          )}
+                        </div>
+
+                        {/* <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => AddToCart(item)} // Calls AddToCart on button click
+                          className="flex items-center gap-2 px-4 py-2 mb-2 rounded-lg text-white w-full sm:w-auto"
+                          style={{
+                            backgroundColor: '#ff3366',
+                            borderRadius: '8px',
+                            fontWeight: '600',
+                            transition: 'background-color 0.3s ease',
+                          }}
+                          onMouseEnter={(e) => e.target.style.backgroundColor = '#ff2a5c'}
+                          onMouseLeave={(e) => e.target.style.backgroundColor = '#ff3366'}
+                        >
+                          <AddCircleOutlineIcon />
+                          Add to Cart
+                        </Button> */}
+
+                        <Tooltip title="Add to Cart">
+                          <AddCircleOutlineIcon
+                            onClick={() => dispatch(addToCart(product))}  // Dispatch addToCart action
+                            sx={{ fontSize: 25, color: '#1976d2', cursor: 'pointer' }}
+                          />
+                        </Tooltip>
+
+
+
+                      </div>
+
+                      {/* Image */}
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full sm:w-1/2 aspect-square object-cover rounded mb-2 sm:mb-0" // Mobile takes full width, larger screens take half
+                      />
+                    </div>
+                  ))}
+                </ul>
+              </Container>
+            </div>
+          ))}
       </div>
 
       <Footer />
     </>
+
+
   );
 };
 
