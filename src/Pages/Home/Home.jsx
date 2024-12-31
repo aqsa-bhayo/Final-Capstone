@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from '../../components/Header/Header'
-import App from '../../App'
 import PrimarySearchAppBar from '../../components/Header/Header'
 import HeroSection from '../../components/HeroSection/heroSection'
 import LandingCards from '../../components/Landig-Cards/LandingCards'
@@ -13,14 +11,14 @@ import Footer from '../../components/Footer/Footer'
 const Home = () => {
   return (
     <>
-   <PrimarySearchAppBar />
+      <PrimarySearchAppBar />
       <HeroSection />
       <PrepareFood />
       <LandingCards />
       <AppDownload />
-      <OfficeWork/>
-      <QuestionSection/>
-      <Footer/>
+      <OfficeWork />
+      <QuestionSection />
+      <Footer />
     </>
   )
 }

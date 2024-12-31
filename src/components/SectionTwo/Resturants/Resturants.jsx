@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addFavorite, removeFavorite } from "../../../redux/favouriteSlice";  // Ensure correct import path
+import { addFavorite, removeFavorite } from "../../../redux/favouriteSlice";
 import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -45,21 +45,19 @@ const Restaurants = () => {
     { id: 12, name: "The Classic Kitchen", category: "Pakistani", rating: "4.7 (100+)", discount1: "Family Pack Rs. 300 Off", discount2: "Festive Offer: Free Delivery", image: ClassicImg, closedUntil: "7:00 AM" },
   ];
 
-  // Check if the restaurant is already in favorites
-  const isFavorite = (restaurant) => favorites.some((item) => item.id === restaurant.id);
 
-  // Add or remove from favorites and navigate to favorites page
+  const isFavorite = (restaurant) => favorites.some((item) => item.id === restaurant.id);
   const toggleFavorite = (restaurant) => {
-    console.log("Toggling favorite for:", restaurant); // Add a console log to check the restaurant being toggled
+    console.log("Toggling favorite for:", restaurant); 
     if (isFavorite(restaurant)) {
-      console.log("Removing from favorites", restaurant.id); // Check if it's being removed
-      dispatch(removeFavorite(restaurant.id));  // Remove from favorites
+      console.log("Removing from favorites", restaurant.id); 
+      dispatch(removeFavorite(restaurant.id));  
     } else {
-      console.log("Adding to favorites", restaurant); // Check if it's being added
-      dispatch(addFavorite(restaurant));  // Add to favorites
+      console.log("Adding to favorites", restaurant); 
+      dispatch(addFavorite(restaurant)); 
     }
-    // Navigate to the favorites page after toggling favorite status
-    navigate(""); // Change the navigate path if needed
+    
+    navigate("");
   };
 
   return (
@@ -84,7 +82,7 @@ const Restaurants = () => {
             padding: { xs: 2, sm: 5 },
             textAlign: { xs: "center", sm: "left" },
             "@media (max-width: 1280px) and (min-width: 800px)": {
-              padding: 3, // Optional: add padding adjustments for medium screens
+              padding: 3, 
             },
           }}
         >
@@ -99,13 +97,13 @@ const Restaurants = () => {
               marginBottom: 3,
               marginLeft: { xs: 0, sm: "190px" },
               "@media (max-width: 1280px) and (min-width: 800px)": {
-                marginLeft: "60px", // Adjust for screens between 1280px and 800px
-                fontSize: "32px", // Adjust font size for medium screens
-                marginTop: "60px", // Adjust top margin for medium screens
-                whiteSpace: "nowrap", // Prevent line breaks for medium screens
+                marginLeft: "60px", 
+                fontSize: "32px", 
+                marginTop: "60px", 
+                whiteSpace: "nowrap", 
               },
               "@media (max-width: 800px)": {
-                marginLeft: 0, // Remove left margin on small screens
+                marginLeft: 0, 
               },
             }}
           >

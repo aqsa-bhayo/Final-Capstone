@@ -20,55 +20,47 @@ import {
   Favorite,
   ShoppingCart,
   AccountCircle,
-  MoreVert,
   Language as LanguageIcon,
 } from '@mui/icons-material';
 import { useTheme } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import Person2Icon from '@mui/icons-material/Person2';
-import LogoutIcon from '@mui/icons-material/Logout';
-import CartList from '../Cart-list/Cart';
+import CartList from '../Cart-list/Cart'; // Make sure this component handles cart display
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [languageAnchorEl, setLanguageAnchorEl] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
-  const [cartItems, setCartItems] = useState([]); // State to track cart items
-  const [drawerOpen, setDrawerOpen] = useState(false); // State to control drawer visibility
+  const [cartItems, setCartItems] = useState([]); // State to store cart items
+  const [drawerOpen, setDrawerOpen] = useState(false); // State to control the drawer visibility
 
   const theme = useTheme();
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  // Checking for saved user info in local storage (logged-in status)
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem('user'));
     if (savedUser) {
       setIsLoggedIn(true);
-      setUserName(savedUser.name); // Assuming user data is saved during login/signup
+      setUserName(savedUser.name);
     }
   }, []);
 
-  // Add item to the cart
-  const AddToCart = (item) => {
+  // Function to add item to the cart
+  const addToCart = (item) => {
     setCartItems((prevItems) => {
-      // Check if the item already exists in the cart
-      const itemExists = prevItems.some(cartItem => cartItem.id === item.id);
+      const itemExists = prevItems.some((cartItem) => cartItem.id === item.id); // Check if the item already exists in the cart
       if (!itemExists) {
-        const updatedCart = [...prevItems, item];
-        console.log("Updated Cart:", updatedCart); // Log to see if the cart updates correctly
-        return updatedCart;
-      } else {
-        console.log("Item already in cart");
-        return prevItems; // Return existing cart if item already added
+        return [...prevItems, item]; // Add item to the cart
       }
+      return prevItems; // Return existing cart if item already exists
     });
   };
 
+  // Handle opening and closing of the profile menu
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -77,14 +69,7 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(null);
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
+  // Handle opening and closing of the language menu
   const handleLanguageMenuOpen = (event) => {
     setLanguageAnchorEl(event.currentTarget);
   };
@@ -93,7 +78,7 @@ export default function PrimarySearchAppBar() {
     setLanguageAnchorEl(null);
   };
 
-  // Updated handleLogout function
+  // Handle logout functionality
   const handleLogout = () => {
     localStorage.removeItem('user');
     setIsLoggedIn(false);
@@ -101,15 +86,19 @@ export default function PrimarySearchAppBar() {
     navigate('/');
   };
 
+  // Handle opening the cart drawer
   const handleCartClick = () => {
-    setDrawerOpen(true); // Open the drawer when the cart icon is clicked
+    setDrawerOpen(true);
   };
 
+  // Handle closing the cart drawer
   const handleDrawerClose = () => {
-    setDrawerOpen(false); // Close the drawer when clicking outside or pressing close
+    setDrawerOpen(false);
   };
 
   const menuId = 'primary-search-account-menu';
+
+  // Profile menu
   const renderProfileMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -120,13 +109,12 @@ export default function PrimarySearchAppBar() {
       open={Boolean(anchorEl)}
       onClose={handleProfileMenuClose}
     >
-      <MenuItem onClick={handleLogout}>
-        <LogoutIcon sx={{ marginRight: 1 }} />
-        Logout
-      </MenuItem>
+      <MenuItem onClick={() => navigate('/profile')}>My Profile</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
 
+  // Language menu
   const renderLanguageMenu = (
     <Menu
       anchorEl={languageAnchorEl}
@@ -142,152 +130,72 @@ export default function PrimarySearchAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="fixed"
-        sx={{
-          backgroundColor: '#ffffff',
-          color: '#000000',
-          boxShadow: 'none',
-          paddingX: { xs: 1, sm: 3, md: 5 },
-          top: 0,
-          left: 0,
-          right: 0,
-        }}
-      >
+      <AppBar position="fixed" sx={{ backgroundColor: '#ffffff', color: '#000000', boxShadow: 'none' }}>
         <Container>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-            }}
-          >
+          <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', alignItems: 'center' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
               <img src={logo} alt="foodpanda" style={{ height: 30 }} />
-              <Typography
-                variant="h6"
-                sx={{
-                  color: '#ff2b85',
-                  fontWeight: '600',
-                  fontSize: { xs: '16px', sm: '22px', md: '24px' },
-                  marginLeft: 1,
-                }}
-              >
+              <Typography variant="h6" sx={{ color: '#ff2b85', fontWeight: '600', marginLeft: 1 }}>
                 foodpanda
               </Typography>
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {/* Log in / Sign up buttons if not logged in */}
               {!isLoggedIn ? (
                 <>
-                  <Button
-                    sx={{
-                      color: '#000000',
-                      display: 'flex',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                      marginRight: 2,
-                      border: '1px solid #000000',
-                      borderRadius: 2,
-                      px: 3,
-                    }}
-                    onClick={() => navigate('/sign-in')}
-                  >
+                  <Button sx={{ color: '#000000', display: 'flex', alignItems: 'center', marginRight: 2 }} onClick={() => navigate('/sign-in')}>
                     Log in
                   </Button>
-                  <Button
-                    sx={{
-                      color: 'white',
-                      display: 'flex',
-                      alignItems: 'center',
-                      backgroundColor: '#c21760',
-                      marginRight: 2,
-                      border: '1px black #ff3366',
-                      borderRadius: 2,
-                      px: 3,
-                    }}
-                    onClick={() => navigate('/sign-up')}
-                  >
+                  <Button sx={{ color: 'white', backgroundColor: '#c21760', marginRight: 2 }} onClick={() => navigate('/sign-up')}>
                     Sign up
                   </Button>
                 </>
               ) : (
                 <>
                   <Typography variant="h6" sx={{ marginRight: 2 }}>
-                    <Person2Icon /> {userName}
+                    {userName}
                   </Typography>
-                  <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={handleProfileMenuOpen}
-                    sx={{ color: 'black' }}
-                  >
-                    <LogoutIcon />
+                  <IconButton size="large" aria-label="account" onClick={handleProfileMenuOpen}>
+                    <AccountCircle />
                   </IconButton>
                 </>
               )}
 
-              <IconButton
-                size="large"
-                aria-label="change language"
-                aria-haspopup="true"
-                onClick={handleLanguageMenuOpen}
-                sx={{ color: 'black', marginRight: 2 }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <LanguageIcon />
-                  <Typography sx={{ marginLeft: 0.5 }}>EN</Typography>
-                  <KeyboardArrowDownIcon sx={{ marginLeft: 0.5 }} />
-                </Box>
+              {/* Language Menu */}
+              <IconButton size="large" aria-label="change language" onClick={handleLanguageMenuOpen}>
+                <LanguageIcon />
               </IconButton>
 
+              {/* Cart Icon with Badge */}
               <IconButton size="large" aria-label="show cart items" color="inherit" onClick={handleCartClick}>
                 <Badge badgeContent={cartItems.length} color="error">
                   <ShoppingBagIcon />
                 </Badge>
               </IconButton>
 
+              {/* Wishlist Icon */}
               <IconButton sx={{ color: 'black' }} onClick={() => navigate('/favourite')}>
-                <Badge badgeContent={0} color="error">
-                  <Favorite />
-                </Badge>
+                <Favorite />
               </IconButton>
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
 
+      {/* Profile and Language Menus */}
       {renderProfileMenu}
       {renderLanguageMenu}
 
-      <Box sx={{ marginTop: '64px' }}></Box>
-
       {/* Cart Drawer */}
-      <Drawer
-        anchor="right"
-        open={drawerOpen}
-        onClose={handleDrawerClose}
-      >
-        <Box
-          sx={{
-            width: 350,
-            padding: 20,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
+      <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerClose}>
+        <Box sx={{ width: 350, padding: 20, display: 'flex', flexDirection: 'column' }}>
           <Typography variant="h6">Cart Items</Typography>
           <List>
             {cartItems.length > 0 ? (
               cartItems.map((item, index) => (
                 <ListItem key={index}>
-                  <ListItemText
-                    primary={item.name}
-                    secondary={`Rs. ${item.price}`}
-                  />
+                  <ListItemText primary={item.name} secondary={`Rs. ${item.price}`} />
                 </ListItem>
               ))
             ) : (

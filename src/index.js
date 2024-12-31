@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,7 +13,11 @@ import Restaurants from './components/SectionTwo/Resturants/Resturants.jsx';
 import RestaurantFood from './components/SectionTwo/RestaurantFood/RestaurantFood.jsx';
 import Favourite from './components/SectionTwo/Favourite/Favourite.jsx'
 import FootDetailPage from './components/SectionTwo/FootDetailPage/FootDetailPage.jsx';
-// import RestaurantItems from './components/SectionTwo/RestaurantItems/RestaurantItems.jsx'; // Import RestaurantItems component for dynamic routes
+import MyProfile from './components/myProfile/MyProfile.jsx';
+import CartList from './components/Cart-list/Cart.jsx';
+import Error from './components/ErrorFolder/Error.jsx';
+import Delivery from './components/Deliverypage/DeliveryPage.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -29,35 +33,57 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
-    path: "/restaurants", // Static route for all restaurants
+    path: "/restaurants",
     element: <Restaurants />,
   },
   {
-    path: "/restaurants/:cityName", // Dynamic route for city-specific restaurants
+    path: "/restaurants/:cityName",
     element: <Restaurants />,
   },
   {
-    path: "/RestaurantFood", // Static route for city-specific restaurant pages
+    path: "/RestaurantFood",
     element: <RestaurantFood />,
   },
   {
-    path: "/restaurant/:id", // Dynamic route for individual restaurant details
+    path: "/restaurant/:id",
     element: <RestaurantFood />,
   },
   {
-    path: "/favourite", // Dynamic route for individual restaurant details
+    path: "/favourite",
     element: <Favourite />,
   },
   {
-    path:"/FootDetailPage",
-    element: <FootDetailPage/>
-  }
-
+    path: "/FootDetailPage",
+    element: <FootDetailPage />,
+  },
+  {
+    path: "/profile",
+    element: <MyProfile />,
+  },
+  {
+    path: "/cartList",
+    element: <CartList />,
+  },
+  {
+    path: "/error",
+    element: <Error />,
+  },
+  {
+    path: "*", 
+    element: <Error />,
+  },
+  {
+    path: "/delivery", 
+    element: <Delivery />,
+  },
 ]);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
+  <Suspense fallback={<div>Loading...</div>}>
     <RouterProvider router={router} />
-  </Provider>
+  </Suspense>
+</Provider>
 );

@@ -3,9 +3,9 @@ import PrimarySearchAppBar from '../Header/Header'
 
 const Layout = () => {
   return (
-   <>
- <PrimarySearchAppBar />
-   </>
+    <>
+      <PrimarySearchAppBar />
+    </>
   )
 }
 

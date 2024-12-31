@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Burger from "../../../assets/burger.jpg";
 import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
