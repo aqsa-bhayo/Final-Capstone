@@ -15,3 +15,24 @@ function App() {
 }
 
 export default App;
+
+// import React from 'react';
+// import Home from './Pages/Home/Home';
+
+// function App() {
+//   return (
+//     <>
+//       <Home />
+//       {/* Uncomment and use other components as needed */}
+//       {/* <PrimarySearchAppBar />
+//       <HeroSection />
+//       <PrepareFood />
+//       <LandingCards />
+//       <AppDownload />
+//       <OfficeWork /> */}
+//       {/* <Login /> */}
+//     </>
+//   );
+// }
+
+// export default App;

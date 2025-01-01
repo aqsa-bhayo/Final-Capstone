@@ -12,9 +12,13 @@ const SignUp = () => {
   const onSubmit = (data) => {
     console.log("User Signed Up:", data);
 
+    // Store user data in localStorage
     localStorage.setItem("user", JSON.stringify(data));
 
+    // Show the Snackbar for successful sign up
     setOpen(true);
+
+    // Redirect to sign-in page after a delay
     setTimeout(() => {
       navigate("/sign-in");
     }, 1000);
@@ -39,6 +43,7 @@ const SignUp = () => {
       <div className="w-full max-w-lg bg-white border-4 rounded-xl border-pink-500 p-10 flex flex-col items-start justify-between">
         <h2 className="text-3xl mb-7 text-pink-600 font-bold">Sign Up</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+          {/* Name Field */}
           <div className="w-full mb-4">
             <label className="text-black text-lg">Name</label>
             <input
@@ -53,6 +58,7 @@ const SignUp = () => {
             )}
           </div>
 
+          {/* Email Field */}
           <div className="w-full mb-4">
             <label className="text-black text-lg">Email</label>
             <input
@@ -73,6 +79,7 @@ const SignUp = () => {
             )}
           </div>
 
+          {/* Password Field */}
           <div className="w-full mb-4">
             <label className="text-black text-lg">Password</label>
             <input
@@ -93,6 +100,7 @@ const SignUp = () => {
             )}
           </div>
 
+          {/* Already have an account? */}
           <p className="text-md my-3">
             Already have an account?{" "}
             <button
@@ -104,6 +112,7 @@ const SignUp = () => {
             </button>
           </p>
 
+          {/* Sign Up Button */}
           <button
             type="submit"
             className="px-4 py-3 text-white bg-pink-500 rounded-lg hover:scale-110 transition-all w-full"
@@ -113,7 +122,7 @@ const SignUp = () => {
         </form>
       </div>
 
-      {/* Customized Snackbar */}
+      {/* Customized Snackbar for Successful Sign Up */}
       <Snackbar
         open={open}
         onClose={closeSnackbar}

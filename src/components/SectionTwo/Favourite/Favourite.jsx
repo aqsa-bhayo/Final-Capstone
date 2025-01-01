@@ -1,11 +1,11 @@
-// Favorites.js
 import React from "react";
 import { useSelector } from "react-redux";
-import Header from "../../Header/Header"; // Import your Header component here
+import Header from "../../Header/Header"; // Import your Header component
 import Footer from "../../Footer/Footer"; // Import Footer component
-import { Container, Box, Typography, Grid } from "@mui/material"; // Material UI components for better styling
+import { Container, Box, Typography, Grid, Card, CardContent, CardMedia } from "@mui/material"; // Material UI components
 
 const Favorites = () => {
+  // Get favorites from Redux state
   const favorites = useSelector((state) => state.favorites.items);
 
   return (
@@ -14,9 +14,18 @@ const Favorites = () => {
       <Header />
 
       {/* Favorites Page Section */}
-      <Box sx={{ paddingTop: "40px", backgroundColor: "#f8f9fa", minHeight: "100vh", paddingBottom: "50px" }}>
+      <Box sx={{ paddingTop: "90px", backgroundColor: "#f8f9fa", minHeight: "", paddingBottom: "50px" }}>
         <Container maxWidth="xl">
-          <Typography variant="h4" sx={{ fontWeight: "700", color: "#333", textAlign: "center", marginBottom: "40px" }}>
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "700",
+              color: "#333",
+              textAlign: "center",
+              marginBottom: "40px",
+              fontSize: { xs: "1.5rem", sm: "2rem" },
+            }}
+          >
             Your Favorite Restaurants
           </Typography>
 
@@ -25,12 +34,16 @@ const Favorites = () => {
             {favorites.length > 0 ? (
               favorites.map((restaurant) => (
                 <Grid item xs={12} sm={6} md={4} key={restaurant.id}>
-                  <div className="bg-white shadow-lg rounded-xl overflow-hidden relative cursor-pointer">
-                    <div className="w-full h-60 relative">
-                      <img src={restaurant.image} alt={restaurant.name} className="w-full h-full object-cover rounded-t-xl" />
-                    </div>
-                    <div className="py-4 px-4">
-                      <Typography variant="h6" sx={{ fontWeight: "600", fontSize: "16px", color: "#444" }}>
+                  <Card sx={{ display: "flex", flexDirection: "column", borderRadius: "10px", boxShadow: 3 }}>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image={restaurant.image}
+                      alt={restaurant.name}
+                      sx={{ objectFit: "cover", borderRadius: "10px 10px 0 0" }}
+                    />
+                    <CardContent>
+                      <Typography variant="h6" sx={{ fontWeight: "600", color: "#444" }}>
                         {restaurant.name}
                       </Typography>
                       <Typography variant="body2" sx={{ color: "#888", fontSize: "14px" }}>
@@ -39,8 +52,8 @@ const Favorites = () => {
                       <Typography variant="body2" sx={{ color: "#888", fontSize: "14px" }}>
                         ⭐ {restaurant.rating}
                       </Typography>
-                    </div>
-                  </div>
+                    </CardContent>
+                  </Card>
                 </Grid>
               ))
             ) : (

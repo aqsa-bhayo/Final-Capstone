@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Burger from "../../../assets/burger.jpg";
 import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
-import { addFavorite, addToCart } from "../../../redux/ProductsSlice";
+import { addFavorite } from "../../../redux/productsSlice";
+import { addToCart } from "../../../redux/cartSlice";
 import sandwichImage from '../../../assets/sendwichch.jpg';
 import cheesyFriesImage from '../../../assets/cheesy fries.jpg';
 import chickenWingsImage from '../../../assets/chicken wings.jpg';
@@ -27,8 +30,9 @@ import strawberryShakeImage from '../../../assets/strawberry shake.jpg';
 import cocoColaImage from '../../../assets/coco cola.jpg';
 import spriteImage from '../../../assets/sprite.jpg';
 import fantaImage from '../../../assets/fanta.jpg';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddIcon from '@mui/icons-material/Add';
 import { Tooltip } from "@mui/material";
+import { Snackbar, Alert } from '@mui/material';
 
 
 const RestaurantFood = () => {
@@ -49,58 +53,58 @@ const RestaurantFood = () => {
         {
           title: "Popular",
           items: [
-            { id: 1, name: 'Fried Chicken Sandwich', price: 'Rs. 625.50', oldPrice: 'Rs. 700', description: 'Crispy Fried Chicken Patty, Swiss Cheese Slice, Jalapenos...', image: sandwichImage },
-            { id: 2, name: 'Cheesy Fries', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Golden fries topped with melted cheese', image: cheesyFriesImage },
-            { id: 3, name: 'Chicken Wings', price: 'Rs. 400', oldPrice: 'Rs. 450', description: 'Crispy fried chicken wings', image: chickenWingsImage },
-            { id: 4, name: 'Veg Burger', price: 'Rs. 300', oldPrice: 'Rs. 350', description: 'Vegetarian burger with fresh veggies', image: vegBurgerImage },
-            { id: 5, name: 'Onion Rings', price: 'Rs. 150', oldPrice: 'Rs. 200', description: 'Crispy fried onion rings', image: onionRingsImage },
+            { id: 1, name: 'Fried Chicken Sandwich', price: '625.50', oldPrice: '700', description: 'Crispy Fried Chicken Patty, Swiss Cheese Slice, Jalapenos...', image: sandwichImage },
+            { id: 2, name: 'Cheesy Fries', price: '350', oldPrice: '400', description: 'Golden fries topped with melted cheese', image: cheesyFriesImage },
+            { id: 3, name: 'Chicken Wings', price: '400', oldPrice: '450', description: 'Crispy fried chicken wings', image: chickenWingsImage },
+            { id: 4, name: 'Veg Burger', price: '300', oldPrice: '350', description: 'Vegetarian burger with fresh veggies', image: vegBurgerImage },
+            { id: 5, name: 'Onion Rings', price: '150', oldPrice: '200', description: 'Crispy fried onion rings', image: onionRingsImage },
           ],
         },
         {
           title: "Starters",
           items: [
-            { id: 1, name: 'Cheesy Nachos', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Crispy nachos topped with melted cheese and jalapenos.', image: cheesyNachosImage },
-            { id: 2, name: 'Garlic Bread', price: 'Rs. 250', oldPrice: 'Rs. 300', description: 'Toasted bread with garlic and butter', image: garlicBreadImage },
-            { id: 3, name: 'Mozzarella Sticks', price: 'Rs. 280', oldPrice: 'Rs. 320', description: 'Crispy mozzarella sticks served with marinara sauce', image: mozzarellaSticksImage },
-            { id: 4, name: 'Spring Rolls', price: 'Rs. 200', oldPrice: 'Rs. 250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
+            { id: 1, name: 'Cheesy Nachos', price: '350', oldPrice: '400', description: 'Crispy nachos topped with melted cheese and jalapenos.', image: cheesyNachosImage },
+            { id: 2, name: 'Garlic Bread', price: '250', oldPrice: '300', description: 'Toasted bread with garlic and butter', image: garlicBreadImage },
+            { id: 3, name: 'Mozzarella Sticks', price: '280', oldPrice: '320', description: 'Crispy mozzarella sticks served with marinara sauce', image: mozzarellaSticksImage },
+            { id: 4, name: 'Spring Rolls', price: '200', oldPrice: '250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
           ],
         },
         {
           title: "Premium Burgers",
           items: [
-            { id: 1, name: 'BBQ Bacon Burger', price: 'Rs. 850', oldPrice: 'Rs. 900', description: 'Juicy beef patty with BBQ sauce and crispy bacon', image: bbqBurgerImage },
-            { id: 2, name: 'Mushroom Swiss Burger', price: 'Rs. 780', oldPrice: 'Rs. 850', description: 'Beef patty topped with mushrooms and Swiss cheese', image: mushroomBurgerImage },
-            { id: 3, name: 'Spicy Chicken Burger', price: 'Rs. 600', oldPrice: 'Rs. 650', description: 'Spicy fried chicken patty with jalapenos', image: spicyBurgerImage },
+            { id: 1, name: 'BBQ Bacon Burger', price: '850', oldPrice: '900', description: 'Juicy beef patty with BBQ sauce and crispy bacon', image: bbqBurgerImage },
+            { id: 2, name: 'Mushroom Swiss Burger', price: '780', oldPrice: '850', description: 'Beef patty topped with mushrooms and Swiss cheese', image: mushroomBurgerImage },
+            { id: 3, name: 'Spicy Chicken Burger', price: '600', oldPrice: '650', description: 'Spicy fried chicken patty with jalapenos', image: spicyBurgerImage },
           ],
         },
         {
           title: "Classic Burgers",
           items: [
-            { id: 1, name: 'Classic Cheeseburger', price: 'Rs. 500', oldPrice: 'Rs. 550', description: 'Beef patty with cheddar cheese', image: classicBurgerImage },
-            { id: 2, name: 'Veggie Burger', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
+            { id: 1, name: 'Classic Cheeseburger', price: '500', oldPrice: '550', description: 'Beef patty with cheddar cheese', image: classicBurgerImage },
+            { id: 2, name: 'Veggie Burger', price: '350', oldPrice: '400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
           ],
         },
         {
           title: "Fries",
           items: [
-            { id: 1, name: 'Curly Fries', price: 'Rs. 180', oldPrice: 'Rs. 220', description: 'Crispy curly fries', image: curlyFriesImage },
-            { id: 2, name: 'Sweet Potato Fries', price: 'Rs. 220', oldPrice: 'Rs. 250', description: 'Crispy sweet potato fries', image: sweetPotatoFriesImage },
+            { id: 1, name: 'Curly Fries', price: '180', oldPrice: '220', description: 'Crispy curly fries', image: curlyFriesImage },
+            { id: 2, name: 'Sweet Potato Fries', price: '220', oldPrice: '250', description: 'Crispy sweet potato fries', image: sweetPotatoFriesImage },
           ],
         },
         {
           title: "Shakes",
           items: [
-            { id: 1, name: 'Chocolate Shake', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Rich and creamy chocolate shake', image: chocolateShakeImage },
-            { id: 2, name: 'Vanilla Shake', price: 'Rs. 300', oldPrice: 'Rs. 350', description: 'Classic vanilla shake with whipped cream', image: vanillaShakeImage },
-            { id: 3, name: 'Strawberry Shake', price: 'Rs. 320', oldPrice: 'Rs. 370', description: 'Sweet and tangy strawberry shake', image: strawberryShakeImage },
+            { id: 1, name: 'Chocolate Shake', price: '350', oldPrice: '400', description: 'Rich and creamy chocolate shake', image: chocolateShakeImage },
+            { id: 2, name: 'Vanilla Shake', price: '300', oldPrice: '350', description: 'Classic vanilla shake with whipped cream', image: vanillaShakeImage },
+            { id: 3, name: 'Strawberry Shake', price: '320', oldPrice: '370', description: 'Sweet and tangy strawberry shake', image: strawberryShakeImage },
           ],
         },
         {
           title: "Beverages",
           items: [
-            { id: 1, name: 'Coca-Cola', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Refreshing Coca-Cola', image: cocoColaImage },
-            { id: 2, name: 'Sprite', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Lemon-lime soda', image: spriteImage },
-            { id: 3, name: 'Fanta', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Citrusy Fanta', image: fantaImage },
+            { id: 1, name: 'Coca-Cola', price: '100', oldPrice: '120', description: 'Refreshing Coca-Cola', image: cocoColaImage },
+            { id: 2, name: 'Sprite', price: '100', oldPrice: '120', description: 'Lemon-lime soda', image: spriteImage },
+            { id: 3, name: 'Fanta', price: '100', oldPrice: '120', description: 'Citrusy Fanta', image: fantaImage },
           ],
         },
       ],
@@ -114,58 +118,58 @@ const RestaurantFood = () => {
         {
           title: "Premium Burgers",
           items: [
-            { id: 1, name: 'BBQ Bacon Burger', price: 'Rs. 850', oldPrice: 'Rs. 900', description: 'Juicy beef patty with BBQ sauce and crispy bacon', image: bbqBurgerImage },
-            { id: 2, name: 'Mushroom Swiss Burger', price: 'Rs. 780', oldPrice: 'Rs. 850', description: 'Beef patty topped with mushrooms and Swiss cheese', image: mushroomBurgerImage },
-            { id: 3, name: 'Spicy Chicken Burger', price: 'Rs. 600', oldPrice: 'Rs. 650', description: 'Spicy fried chicken patty with jalapenos', image: spicyBurgerImage },
+            { id: 1, name: 'BBQ Bacon Burger', price: '850', oldPrice: '900', description: 'Juicy beef patty with BBQ sauce and crispy bacon', image: bbqBurgerImage },
+            { id: 2, name: 'Mushroom Swiss Burger', price: '780', oldPrice: '850', description: 'Beef patty topped with mushrooms and Swiss cheese', image: mushroomBurgerImage },
+            { id: 3, name: 'Spicy Chicken Burger', price: '600', oldPrice: '650', description: 'Spicy fried chicken patty with jalapenos', image: spicyBurgerImage },
           ],
         },
         {
           title: "Classic Burgers",
           items: [
-            { id: 1, name: 'Classic Cheeseburger', price: 'Rs. 500', oldPrice: 'Rs. 550', description: 'Beef patty with cheddar cheese', image: classicBurgerImage },
-            { id: 2, name: 'Veggie Burger', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
+            { id: 1, name: 'Classic Cheeseburger', price: '500', oldPrice: '550', description: 'Beef patty with cheddar cheese', image: classicBurgerImage },
+            { id: 2, name: 'Veggie Burger', price: '350', oldPrice: '400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
           ],
         },
         {
           title: "Popular",
           items: [
-            { id: 1, name: 'Fried Chicken Sandwich', price: 'Rs. 625.50', oldPrice: 'Rs. 700', description: 'Crispy Fried Chicken Patty, Swiss Cheese Slice, Jalapenos...', image: sandwichImage },
-            { id: 2, name: 'Cheesy Fries', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Golden fries topped with melted cheese', image: cheesyFriesImage },
-            { id: 3, name: 'Chicken Wings', price: 'Rs. 400', oldPrice: 'Rs. 450', description: 'Crispy fried chicken wings', image: chickenWingsImage },
-            { id: 4, name: 'Veg Burger', price: 'Rs. 300', oldPrice: 'Rs. 350', description: 'Vegetarian burger with fresh veggies', image: vegBurgerImage },
-            { id: 5, name: 'Onion Rings', price: 'Rs. 150', oldPrice: 'Rs. 200', description: 'Crispy fried onion rings', image: onionRingsImage },
+            { id: 1, name: 'Fried Chicken Sandwich', price: '625.50', oldPrice: '700', description: 'Crispy Fried Chicken Patty, Swiss Cheese Slice, Jalapenos...', image: sandwichImage },
+            { id: 2, name: 'Cheesy Fries', price: '350', oldPrice: '400', description: 'Golden fries topped with melted cheese', image: cheesyFriesImage },
+            { id: 3, name: 'Chicken Wings', price: '400', oldPrice: '450', description: 'Crispy fried chicken wings', image: chickenWingsImage },
+            { id: 4, name: 'Veg Burger', price: '300', oldPrice: '350', description: 'Vegetarian burger with fresh veggies', image: vegBurgerImage },
+            { id: 5, name: 'Onion Rings', price: '150', oldPrice: '200', description: 'Crispy fried onion rings', image: onionRingsImage },
           ],
         },
         {
           title: "Fries",
           items: [
-            { id: 1, name: 'Curly Fries', price: 'Rs. 180', oldPrice: 'Rs. 220', description: 'Crispy curly fries', image: curlyFriesImage },
-            { id: 2, name: 'Sweet Potato Fries', price: 'Rs. 220', oldPrice: 'Rs. 250', description: 'Crispy sweet potato fries', image: sweetPotatoFriesImage },
+            { id: 1, name: 'Curly Fries', price: '180', oldPrice: '220', description: 'Crispy curly fries', image: curlyFriesImage },
+            { id: 2, name: 'Sweet Potato Fries', price: '220', oldPrice: '250', description: 'Crispy sweet potato fries', image: sweetPotatoFriesImage },
           ],
         },
         {
           title: "Shakes",
           items: [
-            { id: 1, name: 'Chocolate Shake', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Rich and creamy chocolate shake', image: chocolateShakeImage },
-            { id: 2, name: 'Vanilla Shake', price: 'Rs. 300', oldPrice: 'Rs. 350', description: 'Classic vanilla shake with whipped cream', image: vanillaShakeImage },
-            { id: 3, name: 'Strawberry Shake', price: 'Rs. 320', oldPrice: 'Rs. 370', description: 'Sweet and tangy strawberry shake', image: strawberryShakeImage },
+            { id: 1, name: 'Chocolate Shake', price: '350', oldPrice: '400', description: 'Rich and creamy chocolate shake', image: chocolateShakeImage },
+            { id: 2, name: 'Vanilla Shake', price: '300', oldPrice: '350', description: 'Classic vanilla shake with whipped cream', image: vanillaShakeImage },
+            { id: 3, name: 'Strawberry Shake', price: '320', oldPrice: '370', description: 'Sweet and tangy strawberry shake', image: strawberryShakeImage },
           ],
         },
         {
           title: "Beverages",
           items: [
-            { id: 1, name: 'Coca-Cola', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Refreshing Coca-Cola', image: cocoColaImage },
-            { id: 2, name: 'Sprite', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Lemon-lime soda', image: spriteImage },
-            { id: 3, name: 'Fanta', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Citrusy Fanta', image: fantaImage },
+            { id: 1, name: 'Coca-Cola', price: '100', oldPrice: '120', description: 'Refreshing Coca-Cola', image: cocoColaImage },
+            { id: 2, name: 'Sprite', price: '100', oldPrice: '120', description: 'Lemon-lime soda', image: spriteImage },
+            { id: 3, name: 'Fanta', price: '100', oldPrice: '120', description: 'Citrusy Fanta', image: fantaImage },
           ],
         },
         {
           title: "Starters",
           items: [
-            { id: 1, name: 'Cheesy Nachos', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Crispy nachos topped with melted cheese and jalapenos.', image: cheesyNachosImage },
-            { id: 2, name: 'Garlic Bread', price: 'Rs. 250', oldPrice: 'Rs. 300', description: 'Toasted bread with garlic and butter', image: garlicBreadImage },
-            { id: 3, name: 'Mozzarella Sticks', price: 'Rs. 280', oldPrice: 'Rs. 320', description: 'Crispy mozzarella sticks served with marinara sauce', image: mozzarellaSticksImage },
-            { id: 4, name: 'Spring Rolls', price: 'Rs. 200', oldPrice: 'Rs. 250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
+            { id: 1, name: 'Cheesy Nachos', price: '350', oldPrice: '400', description: 'Crispy nachos topped with melted cheese and jalapenos.', image: cheesyNachosImage },
+            { id: 2, name: 'Garlic Bread', price: '250', oldPrice: '300', description: 'Toasted bread with garlic and butter', image: garlicBreadImage },
+            { id: 3, name: 'Mozzarella Sticks', price: '280', oldPrice: '320', description: 'Crispy mozzarella sticks served with marinara sauce', image: mozzarellaSticksImage },
+            { id: 4, name: 'Spring Rolls', price: '200', oldPrice: '250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
           ],
         },
       ]
@@ -180,58 +184,58 @@ const RestaurantFood = () => {
         {
           title: "Fries",
           items: [
-            { id: 1, name: 'Curly Fries', price: 'Rs. 180', oldPrice: 'Rs. 220', description: 'Crispy curly fries', image: curlyFriesImage },
-            { id: 2, name: 'Sweet Potato Fries', price: 'Rs. 220', oldPrice: 'Rs. 250', description: 'Crispy sweet potato fries', image: sweetPotatoFriesImage },
+            { id: 1, name: 'Curly Fries', price: '180', oldPrice: '220', description: 'Crispy curly fries', image: curlyFriesImage },
+            { id: 2, name: 'Sweet Potato Fries', price: '220', oldPrice: '250', description: 'Crispy sweet potato fries', image: sweetPotatoFriesImage },
           ],
         },
         {
           title: "Premium Burgers",
           items: [
-            { id: 1, name: 'BBQ Bacon Burger', price: 'Rs. 850', oldPrice: 'Rs. 900', description: 'Juicy beef patty with BBQ sauce and crispy bacon', image: bbqBurgerImage },
-            { id: 2, name: 'Mushroom Swiss Burger', price: 'Rs. 780', oldPrice: 'Rs. 850', description: 'Beef patty topped with mushrooms and Swiss cheese', image: mushroomBurgerImage },
-            { id: 3, name: 'Spicy Chicken Burger', price: 'Rs. 600', oldPrice: 'Rs. 650', description: 'Spicy fried chicken patty with jalapenos', image: spicyBurgerImage },
+            { id: 1, name: 'BBQ Bacon Burger', price: '850', oldPrice: '900', description: 'Juicy beef patty with BBQ sauce and crispy bacon', image: bbqBurgerImage },
+            { id: 2, name: 'Mushroom Swiss Burger', price: '780', oldPrice: '850', description: 'Beef patty topped with mushrooms and Swiss cheese', image: mushroomBurgerImage },
+            { id: 3, name: 'Spicy Chicken Burger', price: '600', oldPrice: '650', description: 'Spicy fried chicken patty with jalapenos', image: spicyBurgerImage },
           ],
         },
         {
           title: "Classic Burgers",
           items: [
-            { id: 1, name: 'Classic Cheeseburger', price: 'Rs. 500', oldPrice: 'Rs. 550', description: 'Beef patty with cheddar cheese', image: classicBurgerImage },
-            { id: 2, name: 'Veggie Burger', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
+            { id: 1, name: 'Classic Cheeseburger', price: '500', oldPrice: '550', description: 'Beef patty with cheddar cheese', image: classicBurgerImage },
+            { id: 2, name: 'Veggie Burger', price: '350', oldPrice: '400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
           ],
         },
         {
           title: "Popular",
           items: [
-            { id: 1, name: 'Fried Chicken Sandwich', price: 'Rs. 625.50', oldPrice: 'Rs. 700', description: 'Crispy Fried Chicken Patty, Swiss Cheese Slice, Jalapenos...', image: sandwichImage },
-            { id: 2, name: 'Cheesy Fries', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Golden fries topped with melted cheese', image: cheesyFriesImage },
-            { id: 3, name: 'Chicken Wings', price: 'Rs. 400', oldPrice: 'Rs. 450', description: 'Crispy fried chicken wings', image: chickenWingsImage },
-            { id: 4, name: 'Veg Burger', price: 'Rs. 300', oldPrice: 'Rs. 350', description: 'Vegetarian burger with fresh veggies', image: vegBurgerImage },
-            { id: 5, name: 'Onion Rings', price: 'Rs. 150', oldPrice: 'Rs. 200', description: 'Crispy fried onion rings', image: onionRingsImage },
+            { id: 1, name: 'Fried Chicken Sandwich', price: '625.50', oldPrice: '700', description: 'Crispy Fried Chicken Patty, Swiss Cheese Slice, Jalapenos...', image: sandwichImage },
+            { id: 2, name: 'Cheesy Fries', price: '350', oldPrice: '400', description: 'Golden fries topped with melted cheese', image: cheesyFriesImage },
+            { id: 3, name: 'Chicken Wings', price: '400', oldPrice: '450', description: 'Crispy fried chicken wings', image: chickenWingsImage },
+            { id: 4, name: 'Veg Burger', price: '300', oldPrice: '350', description: 'Vegetarian burger with fresh veggies', image: vegBurgerImage },
+            { id: 5, name: 'Onion Rings', price: '150', oldPrice: '200', description: 'Crispy fried onion rings', image: onionRingsImage },
           ],
         },
         {
           title: "Shakes",
           items: [
-            { id: 1, name: 'Chocolate Shake', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Rich and creamy chocolate shake', image: chocolateShakeImage },
-            { id: 2, name: 'Vanilla Shake', price: 'Rs. 300', oldPrice: 'Rs. 350', description: 'Classic vanilla shake with whipped cream', image: vanillaShakeImage },
-            { id: 3, name: 'Strawberry Shake', price: 'Rs. 320', oldPrice: 'Rs. 370', description: 'Sweet and tangy strawberry shake', image: strawberryShakeImage },
+            { id: 1, name: 'Chocolate Shake', price: '350', oldPrice: '400', description: 'Rich and creamy chocolate shake', image: chocolateShakeImage },
+            { id: 2, name: 'Vanilla Shake', price: '300', oldPrice: '350', description: 'Classic vanilla shake with whipped cream', image: vanillaShakeImage },
+            { id: 3, name: 'Strawberry Shake', price: '320', oldPrice: '370', description: 'Sweet and tangy strawberry shake', image: strawberryShakeImage },
           ],
         },
         {
           title: "Beverages",
           items: [
-            { id: 1, name: 'Coca-Cola', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Refreshing Coca-Cola', image: cocoColaImage },
-            { id: 2, name: 'Sprite', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Lemon-lime soda', image: spriteImage },
-            { id: 3, name: 'Fanta', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Citrusy Fanta', image: fantaImage },
+            { id: 1, name: 'Coca-Cola', price: '100', oldPrice: '120', description: 'Refreshing Coca-Cola', image: cocoColaImage },
+            { id: 2, name: 'Sprite', price: '100', oldPrice: '120', description: 'Lemon-lime soda', image: spriteImage },
+            { id: 3, name: 'Fanta', price: '100', oldPrice: '120', description: 'Citrusy Fanta', image: fantaImage },
           ],
         },
         {
           title: "Starters",
           items: [
-            { id: 1, name: 'Cheesy Nachos', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Crispy nachos topped with melted cheese and jalapenos.', image: cheesyNachosImage },
-            { id: 2, name: 'Garlic Bread', price: 'Rs. 250', oldPrice: 'Rs. 300', description: 'Toasted bread with garlic and butter', image: garlicBreadImage },
-            { id: 3, name: 'Mozzarella Sticks', price: 'Rs. 280', oldPrice: 'Rs. 320', description: 'Crispy mozzarella sticks served with marinara sauce', image: mozzarellaSticksImage },
-            { id: 4, name: 'Spring Rolls', price: 'Rs. 200', oldPrice: 'Rs. 250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
+            { id: 1, name: 'Cheesy Nachos', price: '350', oldPrice: '400', description: 'Crispy nachos topped with melted cheese and jalapenos.', image: cheesyNachosImage },
+            { id: 2, name: 'Garlic Bread', price: '250', oldPrice: '300', description: 'Toasted bread with garlic and butter', image: garlicBreadImage },
+            { id: 3, name: 'Mozzarella Sticks', price: '280', oldPrice: '320', description: 'Crispy mozzarella sticks served with marinara sauce', image: mozzarellaSticksImage },
+            { id: 4, name: 'Spring Rolls', price: '200', oldPrice: '250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
           ],
         },
       ]
@@ -245,58 +249,58 @@ const RestaurantFood = () => {
         {
           title: "Popular",
           items: [
-            { id: 1, name: 'Fried Chicken Sandwich', price: 'Rs. 625.50', oldPrice: 'Rs. 700', description: 'Crispy Fried Chicken Patty, Swiss Cheese Slice, Jalapenos...', image: sandwichImage },
-            { id: 2, name: 'Cheesy Fries', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Golden fries topped with melted cheese', image: cheesyFriesImage },
-            { id: 3, name: 'Chicken Wings', price: 'Rs. 400', oldPrice: 'Rs. 450', description: 'Crispy fried chicken wings', image: chickenWingsImage },
-            { id: 4, name: 'Veg Burger', price: 'Rs. 300', oldPrice: 'Rs. 350', description: 'Vegetarian burger with fresh veggies', image: vegBurgerImage },
-            { id: 5, name: 'Onion Rings', price: 'Rs. 150', oldPrice: 'Rs. 200', description: 'Crispy fried onion rings', image: onionRingsImage },
+            { id: 1, name: 'Fried Chicken Sandwich', price: '625.50', oldPrice: '700', description: 'Crispy Fried Chicken Patty, Swiss Cheese Slice, Jalapenos...', image: sandwichImage },
+            { id: 2, name: 'Cheesy Fries', price: '350', oldPrice: '400', description: 'Golden fries topped with melted cheese', image: cheesyFriesImage },
+            { id: 3, name: 'Chicken Wings', price: '400', oldPrice: '450', description: 'Crispy fried chicken wings', image: chickenWingsImage },
+            { id: 4, name: 'Veg Burger', price: '300', oldPrice: '350', description: 'Vegetarian burger with fresh veggies', image: vegBurgerImage },
+            { id: 5, name: 'Onion Rings', price: '150', oldPrice: '200', description: 'Crispy fried onion rings', image: onionRingsImage },
           ],
         },
         {
           title: "Shakes",
           items: [
-            { id: 1, name: 'Chocolate Shake', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Rich and creamy chocolate shake', image: chocolateShakeImage },
-            { id: 2, name: 'Vanilla Shake', price: 'Rs. 300', oldPrice: 'Rs. 350', description: 'Classic vanilla shake with whipped cream', image: vanillaShakeImage },
-            { id: 3, name: 'Strawberry Shake', price: 'Rs. 320', oldPrice: 'Rs. 370', description: 'Sweet and tangy strawberry shake', image: strawberryShakeImage },
+            { id: 1, name: 'Chocolate Shake', price: '350', oldPrice: '400', description: 'Rich and creamy chocolate shake', image: chocolateShakeImage },
+            { id: 2, name: 'Vanilla Shake', price: '300', oldPrice: '350', description: 'Classic vanilla shake with whipped cream', image: vanillaShakeImage },
+            { id: 3, name: 'Strawberry Shake', price: '320', oldPrice: '370', description: 'Sweet and tangy strawberry shake', image: strawberryShakeImage },
           ],
         },
         {
           title: "Premium Burgers",
           items: [
-            { id: 1, name: 'BBQ Bacon Burger', price: 'Rs. 850', oldPrice: 'Rs. 900', description: 'Juicy beef patty with BBQ sauce and crispy bacon', image: bbqBurgerImage },
-            { id: 2, name: 'Mushroom Swiss Burger', price: 'Rs. 780', oldPrice: 'Rs. 850', description: 'Beef patty topped with mushrooms and Swiss cheese', image: mushroomBurgerImage },
-            { id: 3, name: 'Spicy Chicken Burger', price: 'Rs. 600', oldPrice: 'Rs. 650', description: 'Spicy fried chicken patty with jalapenos', image: spicyBurgerImage },
+            { id: 1, name: 'BBQ Bacon Burger', price: '850', oldPrice: '900', description: 'Juicy beef patty with BBQ sauce and crispy bacon', image: bbqBurgerImage },
+            { id: 2, name: 'Mushroom Swiss Burger', price: '780', oldPrice: '850', description: 'Beef patty topped with mushrooms and Swiss cheese', image: mushroomBurgerImage },
+            { id: 3, name: 'Spicy Chicken Burger', price: '600', oldPrice: '650', description: 'Spicy fried chicken patty with jalapenos', image: spicyBurgerImage },
           ],
         },
         {
           title: "Beverages",
           items: [
-            { id: 1, name: 'Coca-Cola', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Refreshing Coca-Cola', image: cocoColaImage },
-            { id: 2, name: 'Sprite', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Lemon-lime soda', image: spriteImage },
-            { id: 3, name: 'Fanta', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Citrusy Fanta', image: fantaImage },
+            { id: 1, name: 'Coca-Cola', price: '100', oldPrice: '120', description: 'Refreshing Coca-Cola', image: cocoColaImage },
+            { id: 2, name: 'Sprite', price: '100', oldPrice: '120', description: 'Lemon-lime soda', image: spriteImage },
+            { id: 3, name: 'Fanta', price: '100', oldPrice: '120', description: 'Citrusy Fanta', image: fantaImage },
           ],
         },
         {
           title: "Fries",
           items: [
-            { id: 1, name: 'Curly Fries', price: 'Rs. 180', oldPrice: 'Rs. 220', description: 'Crispy curly fries', image: curlyFriesImage },
-            { id: 2, name: 'Sweet Potato Fries', price: 'Rs. 220', oldPrice: 'Rs. 250', description: 'Crispy sweet potato fries', image: sweetPotatoFriesImage },
+            { id: 1, name: 'Curly Fries', price: '180', oldPrice: '220', description: 'Crispy curly fries', image: curlyFriesImage },
+            { id: 2, name: 'Sweet Potato Fries', price: '220', oldPrice: '250', description: 'Crispy sweet potato fries', image: sweetPotatoFriesImage },
           ],
         },
         {
           title: "Starters",
           items: [
-            { id: 1, name: 'Cheesy Nachos', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Crispy nachos topped with melted cheese and jalapenos.', image: cheesyNachosImage },
-            { id: 2, name: 'Garlic Bread', price: 'Rs. 250', oldPrice: 'Rs. 300', description: 'Toasted bread with garlic and butter', image: garlicBreadImage },
-            { id: 3, name: 'Mozzarella Sticks', price: 'Rs. 280', oldPrice: 'Rs. 320', description: 'Crispy mozzarella sticks served with marinara sauce', image: mozzarellaSticksImage },
-            { id: 4, name: 'Spring Rolls', price: 'Rs. 200', oldPrice: 'Rs. 250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
+            { id: 1, name: 'Cheesy Nachos', price: '350', oldPrice: '400', description: 'Crispy nachos topped with melted cheese and jalapenos.', image: cheesyNachosImage },
+            { id: 2, name: 'Garlic Bread', price: '250', oldPrice: '300', description: 'Toasted bread with garlic and butter', image: garlicBreadImage },
+            { id: 3, name: 'Mozzarella Sticks', price: '280', oldPrice: '320', description: 'Crispy mozzarella sticks served with marinara sauce', image: mozzarellaSticksImage },
+            { id: 4, name: 'Spring Rolls', price: '200', oldPrice: '250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
           ],
         },
         {
           title: "Classic Burgers",
           items: [
-            { id: 1, name: 'Classic Cheeseburger', price: 'Rs. 500', oldPrice: 'Rs. 550', description: 'Beef patty with cheddar cheese', image: classicBurgerImage },
-            { id: 2, name: 'Veggie Burger', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
+            { id: 1, name: 'Classic Cheeseburger', price: '500', oldPrice: '550', description: 'Beef patty with cheddar cheese', image: classicBurgerImage },
+            { id: 2, name: 'Veggie Burger', price: '350', oldPrice: '400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
           ],
         },
       ]
@@ -308,58 +312,58 @@ const RestaurantFood = () => {
         {
           title: "Fries",
           items: [
-            { id: 1, name: 'Curly Fries', price: 'Rs. 180', oldPrice: 'Rs. 220', description: 'Crispy curly fries', image: curlyFriesImage },
-            { id: 2, name: 'Sweet Potato Fries', price: 'Rs. 220', oldPrice: 'Rs. 250', description: 'Crispy sweet potato fries', image: sweetPotatoFriesImage },
+            { id: 1, name: 'Curly Fries', price: '180', oldPrice: '220', description: 'Crispy curly fries', image: curlyFriesImage },
+            { id: 2, name: 'Sweet Potato Fries', price: '220', oldPrice: '250', description: 'Crispy sweet potato fries', image: sweetPotatoFriesImage },
           ],
         },
         {
           title: "Starters",
           items: [
-            { id: 1, name: 'Cheesy Nachos', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Crispy nachos topped with melted cheese and jalapenos.', image: cheesyNachosImage },
-            { id: 2, name: 'Garlic Bread', price: 'Rs. 250', oldPrice: 'Rs. 300', description: 'Toasted bread with garlic and butter', image: garlicBreadImage },
-            { id: 3, name: 'Mozzarella Sticks', price: 'Rs. 280', oldPrice: 'Rs. 320', description: 'Crispy mozzarella sticks served with marinara sauce', image: mozzarellaSticksImage },
-            { id: 4, name: 'Spring Rolls', price: 'Rs. 200', oldPrice: 'Rs. 250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
+            { id: 1, name: 'Cheesy Nachos', price: '350', oldPrice: '400', description: 'Crispy nachos topped with melted cheese and jalapenos.', image: cheesyNachosImage },
+            { id: 2, name: 'Garlic Bread', price: '250', oldPrice: '300', description: 'Toasted bread with garlic and butter', image: garlicBreadImage },
+            { id: 3, name: 'Mozzarella Sticks', price: '280', oldPrice: '320', description: 'Crispy mozzarella sticks served with marinara sauce', image: mozzarellaSticksImage },
+            { id: 4, name: 'Spring Rolls', price: '200', oldPrice: '250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
           ],
         },
         {
           title: "Shakes",
           items: [
-            { id: 1, name: 'Chocolate Shake', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Rich and creamy chocolate shake', image: chocolateShakeImage },
-            { id: 2, name: 'Vanilla Shake', price: 'Rs. 300', oldPrice: 'Rs. 350', description: 'Classic vanilla shake with whipped cream', image: vanillaShakeImage },
-            { id: 3, name: 'Strawberry Shake', price: 'Rs. 320', oldPrice: 'Rs. 370', description: 'Sweet and tangy strawberry shake', image: strawberryShakeImage },
+            { id: 1, name: 'Chocolate Shake', price: '350', oldPrice: '400', description: 'Rich and creamy chocolate shake', image: chocolateShakeImage },
+            { id: 2, name: 'Vanilla Shake', price: '300', oldPrice: '350', description: 'Classic vanilla shake with whipped cream', image: vanillaShakeImage },
+            { id: 3, name: 'Strawberry Shake', price: '320', oldPrice: '370', description: 'Sweet and tangy strawberry shake', image: strawberryShakeImage },
           ],
         },
         {
           title: "Popular",
           items: [
-            { id: 1, name: 'Fried Chicken Sandwich', price: 'Rs. 625.50', oldPrice: 'Rs. 700', description: 'Crispy Fried Chicken Patty, Swiss Cheese Slice, Jalapenos...', image: sandwichImage },
-            { id: 2, name: 'Cheesy Fries', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Golden fries topped with melted cheese', image: cheesyFriesImage },
-            { id: 3, name: 'Chicken Wings', price: 'Rs. 400', oldPrice: 'Rs. 450', description: 'Crispy fried chicken wings', image: chickenWingsImage },
-            { id: 4, name: 'Veg Burger', price: 'Rs. 300', oldPrice: 'Rs. 350', description: 'Vegetarian burger with fresh veggies', image: vegBurgerImage },
-            { id: 5, name: 'Onion Rings', price: 'Rs. 150', oldPrice: 'Rs. 200', description: 'Crispy fried onion rings', image: onionRingsImage },
+            { id: 1, name: 'Fried Chicken Sandwich', price: '625.50', oldPrice: '700', description: 'Crispy Fried Chicken Patty, Swiss Cheese Slice, Jalapenos...', image: sandwichImage },
+            { id: 2, name: 'Cheesy Fries', price: '350', oldPrice: '400', description: 'Golden fries topped with melted cheese', image: cheesyFriesImage },
+            { id: 3, name: 'Chicken Wings', price: '400', oldPrice: '450', description: 'Crispy fried chicken wings', image: chickenWingsImage },
+            { id: 4, name: 'Veg Burger', price: '300', oldPrice: '350', description: 'Vegetarian burger with fresh veggies', image: vegBurgerImage },
+            { id: 5, name: 'Onion Rings', price: '150', oldPrice: '200', description: 'Crispy fried onion rings', image: onionRingsImage },
           ],
         },
         {
           title: "Beverages",
           items: [
-            { id: 1, name: 'Coca-Cola', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Refreshing Coca-Cola', image: cocoColaImage },
-            { id: 2, name: 'Sprite', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Lemon-lime soda', image: spriteImage },
-            { id: 3, name: 'Fanta', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Citrusy Fanta', image: fantaImage },
+            { id: 1, name: 'Coca-Cola', price: '100', oldPrice: '120', description: 'Refreshing Coca-Cola', image: cocoColaImage },
+            { id: 2, name: 'Sprite', price: '100', oldPrice: '120', description: 'Lemon-lime soda', image: spriteImage },
+            { id: 3, name: 'Fanta', price: '100', oldPrice: '120', description: 'Citrusy Fanta', image: fantaImage },
           ],
         },
         {
           title: "Classic Burgers",
           items: [
-            { id: 1, name: 'Classic Cheeseburger', price: 'Rs. 500', oldPrice: 'Rs. 550', description: 'Beef patty with cheddar cheese', image: classicBurgerImage },
-            { id: 2, name: 'Veggie Burger', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
+            { id: 1, name: 'Classic Cheeseburger', price: '500', oldPrice: '550', description: 'Beef patty with cheddar cheese', image: classicBurgerImage },
+            { id: 2, name: 'Veggie Burger', price: '350', oldPrice: '400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
           ],
         },
         {
           title: "Premium Burgers",
           items: [
-            { id: 1, name: 'BBQ Bacon Burger', price: 'Rs. 850', oldPrice: 'Rs. 900', description: 'Juicy beef patty with BBQ sauce and crispy bacon', image: bbqBurgerImage },
-            { id: 2, name: 'Mushroom Swiss Burger', price: 'Rs. 780', oldPrice: 'Rs. 850', description: 'Beef patty topped with mushrooms and Swiss cheese', image: mushroomBurgerImage },
-            { id: 3, name: 'Spicy Chicken Burger', price: 'Rs. 600', oldPrice: 'Rs. 650', description: 'Spicy fried chicken patty with jalapenos', image: spicyBurgerImage },
+            { id: 1, name: 'BBQ Bacon Burger', price: '850', oldPrice: '900', description: 'Juicy beef patty with BBQ sauce and crispy bacon', image: bbqBurgerImage },
+            { id: 2, name: 'Mushroom Swiss Burger', price: '780', oldPrice: '850', description: 'Beef patty topped with mushrooms and Swiss cheese', image: mushroomBurgerImage },
+            { id: 3, name: 'Spicy Chicken Burger', price: '600', oldPrice: '650', description: 'Spicy fried chicken patty with jalapenos', image: spicyBurgerImage },
           ],
         },
       ]
@@ -372,58 +376,58 @@ const RestaurantFood = () => {
         {
           title: "Starters",
           items: [
-            { id: 1, name: 'Cheesy Nachos', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Crispy nachos topped with melted cheese and jalapenos.', image: cheesyNachosImage },
-            { id: 2, name: 'Garlic Bread', price: 'Rs. 250', oldPrice: 'Rs. 300', description: 'Toasted bread with garlic and butter', image: garlicBreadImage },
-            { id: 3, name: 'Mozzarella Sticks', price: 'Rs. 280', oldPrice: 'Rs. 320', description: 'Crispy mozzarella sticks served with marinara sauce', image: mozzarellaSticksImage },
-            { id: 4, name: 'Spring Rolls', price: 'Rs. 200', oldPrice: 'Rs. 250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
+            { id: 1, name: 'Cheesy Nachos', price: '350', oldPrice: '400', description: 'Crispy nachos topped with melted cheese and jalapenos.', image: cheesyNachosImage },
+            { id: 2, name: 'Garlic Bread', price: '250', oldPrice: '300', description: 'Toasted bread with garlic and butter', image: garlicBreadImage },
+            { id: 3, name: 'Mozzarella Sticks', price: '280', oldPrice: '320', description: 'Crispy mozzarella sticks served with marinara sauce', image: mozzarellaSticksImage },
+            { id: 4, name: 'Spring Rolls', price: '200', oldPrice: '250', description: 'Crispy spring rolls filled with vegetables', image: springRollsImage },
           ],
         },
         {
           title: "Popular",
           items: [
-            { id: 1, name: 'Fried Chicken Sandwich', price: 'Rs. 625.50', oldPrice: 'Rs. 700', description: 'Crispy Fried Chicken Patty, Swiss Cheese Slice, Jalapenos...', image: sandwichImage },
-            { id: 2, name: 'Cheesy Fries', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Golden fries topped with melted cheese', image: cheesyFriesImage },
-            { id: 3, name: 'Chicken Wings', price: 'Rs. 400', oldPrice: 'Rs. 450', description: 'Crispy fried chicken wings', image: chickenWingsImage },
-            { id: 4, name: 'Veg Burger', price: 'Rs. 300', oldPrice: 'Rs. 350', description: 'Vegetarian burger with fresh veggies', image: vegBurgerImage },
-            { id: 5, name: 'Onion Rings', price: 'Rs. 150', oldPrice: 'Rs. 200', description: 'Crispy fried onion rings', image: onionRingsImage },
+            { id: 1, name: 'Fried Chicken Sandwich', price: '625.50', oldPrice: '700', description: 'Crispy Fried Chicken Patty, Swiss Cheese Slice, Jalapenos...', image: sandwichImage },
+            { id: 2, name: 'Cheesy Fries', price: '350', oldPrice: '400', description: 'Golden fries topped with melted cheese', image: cheesyFriesImage },
+            { id: 3, name: 'Chicken Wings', price: '400', oldPrice: '450', description: 'Crispy fried chicken wings', image: chickenWingsImage },
+            { id: 4, name: 'Veg Burger', price: '300', oldPrice: '350', description: 'Vegetarian burger with fresh veggies', image: vegBurgerImage },
+            { id: 5, name: 'Onion Rings', price: '150', oldPrice: '200', description: 'Crispy fried onion rings', image: onionRingsImage },
           ],
         },
         {
           title: "Premium Burgers",
           items: [
-            { id: 1, name: 'BBQ Bacon Burger', price: 'Rs. 850', oldPrice: 'Rs. 900', description: 'Juicy beef patty with BBQ sauce and crispy bacon', image: bbqBurgerImage },
-            { id: 2, name: 'Mushroom Swiss Burger', price: 'Rs. 780', oldPrice: 'Rs. 850', description: 'Beef patty topped with mushrooms and Swiss cheese', image: mushroomBurgerImage },
-            { id: 3, name: 'Spicy Chicken Burger', price: 'Rs. 600', oldPrice: 'Rs. 650', description: 'Spicy fried chicken patty with jalapenos', image: spicyBurgerImage },
+            { id: 1, name: 'BBQ Bacon Burger', price: '850', oldPrice: '900', description: 'Juicy beef patty with BBQ sauce and crispy bacon', image: bbqBurgerImage },
+            { id: 2, name: 'Mushroom Swiss Burger', price: '780', oldPrice: '850', description: 'Beef patty topped with mushrooms and Swiss cheese', image: mushroomBurgerImage },
+            { id: 3, name: 'Spicy Chicken Burger', price: '600', oldPrice: '650', description: 'Spicy fried chicken patty with jalapenos', image: spicyBurgerImage },
           ],
         },
         {
           title: "Shakes",
           items: [
-            { id: 1, name: 'Chocolate Shake', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'Rich and creamy chocolate shake', image: chocolateShakeImage },
-            { id: 2, name: 'Vanilla Shake', price: 'Rs. 300', oldPrice: 'Rs. 350', description: 'Classic vanilla shake with whipped cream', image: vanillaShakeImage },
-            { id: 3, name: 'Strawberry Shake', price: 'Rs. 320', oldPrice: 'Rs. 370', description: 'Sweet and tangy strawberry shake', image: strawberryShakeImage },
+            { id: 1, name: 'Chocolate Shake', price: '350', oldPrice: '400', description: 'Rich and creamy chocolate shake', image: chocolateShakeImage },
+            { id: 2, name: 'Vanilla Shake', price: '300', oldPrice: '350', description: 'Classic vanilla shake with whipped cream', image: vanillaShakeImage },
+            { id: 3, name: 'Strawberry Shake', price: '320', oldPrice: '370', description: 'Sweet and tangy strawberry shake', image: strawberryShakeImage },
           ],
         },
         {
           title: "Classic Burgers",
           items: [
-            { id: 1, name: 'Classic Cheeseburger', price: 'Rs. 500', oldPrice: 'Rs. 550', description: 'Beef patty with cheddar cheese', image: classicBurgerImage },
-            { id: 2, name: 'Veggie Burger', price: 'Rs. 350', oldPrice: 'Rs. 400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
+            { id: 1, name: 'Classic Cheeseburger', price: '500', oldPrice: '550', description: 'Beef patty with cheddar cheese', image: classicBurgerImage },
+            { id: 2, name: 'Veggie Burger', price: '350', oldPrice: '400', description: 'A healthy veggie patty with fresh toppings', image: veggieBurgerImage },
           ],
         },
         {
           title: "Fries",
           items: [
-            { id: 1, name: 'Curly Fries', price: 'Rs. 180', oldPrice: 'Rs. 220', description: 'Crispy curly fries', image: curlyFriesImage },
-            { id: 2, name: 'Sweet Potato Fries', price: 'Rs. 220', oldPrice: 'Rs. 250', description: 'Crispy sweet potato fries', image: sweetPotatoFriesImage },
+            { id: 1, name: 'Curly Fries', price: '180', oldPrice: '220', description: 'Crispy curly fries', image: curlyFriesImage },
+            { id: 2, name: 'Sweet Potato Fries', price: '220', oldPrice: '250', description: 'Crispy sweet potato fries', image: sweetPotatoFriesImage },
           ],
         },
         {
           title: "Beverages",
           items: [
-            { id: 1, name: 'Coca-Cola', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Refreshing Coca-Cola', image: cocoColaImage },
-            { id: 2, name: 'Sprite', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Lemon-lime soda', image: spriteImage },
-            { id: 3, name: 'Fanta', price: 'Rs. 100', oldPrice: 'Rs. 120', description: 'Citrusy Fanta', image: fantaImage },
+            { id: 1, name: 'Coca-Cola', price: '100', oldPrice: '120', description: 'Refreshing Coca-Cola', image: cocoColaImage },
+            { id: 2, name: 'Sprite', price: '100', oldPrice: '120', description: 'Lemon-lime soda', image: spriteImage },
+            { id: 3, name: 'Fanta', price: '100', oldPrice: '120', description: 'Citrusy Fanta', image: fantaImage },
           ],
         },
       ]
@@ -445,25 +449,20 @@ const RestaurantFood = () => {
     }
   }, []);
 
-  const cartHandler = (product) => {
-    const isExist = cartList.find((cart) => cart.id === product.id);
-    if (!isExist) {
-      setCartList((prev) => [...prev, product]);
-
-      let strCartList = JSON.stringify([...cartList, product]);
-      localStorage.setItem("cartList", strCartList);
-    } else {
-      setOpenAlert(true);
-    }
+  const handleAddToCart = (item) => {
+    // Format the item to match the cart structure
+    const cartItem = {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      description: item.description,
+      image: item.image
+    };
+    
+    dispatch(addToCart(cartItem));
+    setOpenAlert(true);
   };
 
-   // Handle close for the Snackbar alert
-   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlert(false);
-  };
   if (!restaurant) {
     return (
       <>
@@ -531,79 +530,82 @@ const RestaurantFood = () => {
 
       {/* Product List */}
       <div className="p-6">
-        {restaurant.products
-          .filter((product) => activeTab === 'All' || product.title === activeTab) // Filter products based on the active tab
-          .map((product, productIndex) => (
-            <div key={productIndex} className="mb-4">
-              <Container maxWidth="xl">
-                {/* Adjusted title alignment to left */}
-                <div className="text-left">
-                  <h2 className="text-xl font-semibold mb-2 ms-5" style={{ color: '#ff3366' }}>{product.title}</h2>
+  {restaurant.products
+    .filter((product) => activeTab === 'All' || product.title === activeTab)
+    .map((product, productIndex) => (
+      <div key={productIndex} className="mb-4">
+        <Container maxWidth="xl">
+          <div className="text-left">
+            <h2 className="text-xl font-semibold mb-2 ms-5" style={{ color: '#ff3366' }}>
+              {product.title}
+            </h2>
+          </div>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {product.items.map((item) => (
+              <div key={item.id} className="p-4 border rounded flex flex-col sm:flex-row justify-between">
+                <div className="sm:w-1/2">
+                  <h3 className="text-lg font-medium">{item.name}</h3>
+                  <p className="text-sm text-gray-600">{item.description}</p>
+                  <div className="mt-2">
+                    <p className="text-lg font-bold text-blue-500">Rs. {item.price}</p>
+                    {item.oldPrice && (
+                      <p className="text-sm text-gray-500 line-through">Rs. {item.oldPrice}</p>
+                    )}
+                  </div>
+
+                  <Button
+                    onClick={() => handleAddToCart(item)}  // Dispatch addToCart when clicked
+                    sx={{
+                      minWidth: '35px',
+                      height: '35px',
+                      padding: '8px',
+                      backgroundColor: '#d70f64',
+                      color: 'white',
+                      borderRadius: '8px',
+                      '&:hover': {
+                        backgroundColor: '#c20c59',
+                      },
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <AddIcon sx={{ fontSize: 20 }} />
+                  </Button>
                 </div>
-                {/* Mobile responsive grid */}
-                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {product.items.map((item) => (
-                    <div key={item.id} className="p-4 border rounded flex flex-col sm:flex-row justify-between">
-                      <div className="sm:w-1/2"> {/* Adjusts width for larger screens */}
-                        <h3 className="text-lg font-medium">{item.name}</h3>
-                        <p className="text-sm text-gray-600">{item.description}</p>
-                        <div className="mt-2">
-                          <p className="text-lg font-bold text-blue-500">Rs. {item.price}</p>
-                          {item.oldPrice && (
-                            <p className="text-sm text-gray-500 line-through">
-                              Rs. {item.oldPrice}
-                            </p>
-                          )}
-                        </div>
 
-                        {/* <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => AddToCart(item)} // Calls AddToCart on button click
-                          className="flex items-center gap-2 px-4 py-2 mb-2 rounded-lg text-white w-full sm:w-auto"
-                          style={{
-                            backgroundColor: '#ff3366',
-                            borderRadius: '8px',
-                            fontWeight: '600',
-                            transition: 'background-color 0.3s ease',
-                          }}
-                          onMouseEnter={(e) => e.target.style.backgroundColor = '#ff2a5c'}
-                          onMouseLeave={(e) => e.target.style.backgroundColor = '#ff3366'}
-                        >
-                          <AddCircleOutlineIcon />
-                          Add to Cart
-                        </Button> */}
-
-                        <Tooltip title="Add to Cart">
-                          <AddCircleOutlineIcon
-                            onClick={() => dispatch(addToCart(product))}  // Dispatch addToCart action
-                            sx={{ fontSize: 25, color: '#1976d2', cursor: 'pointer' }}
-                          />
-                        </Tooltip>
-
-
-
-                      </div>
-
-                      {/* Image */}
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full sm:w-1/2 aspect-square object-cover rounded mb-2 sm:mb-0" // Mobile takes full width, larger screens take half
-                      />
-                    </div>
-                  ))}
-                </ul>
-              </Container>
-            </div>
-          ))}
+                {/* Image */}
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full sm:w-1/2 aspect-square object-cover rounded mb-2 sm:mb-0"
+                />
+              </div>
+            ))}
+          </ul>
+        </Container>
       </div>
+    ))}
+</div>
+
 
       <Footer />
+
+      {/* Add Snackbar */}
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={3000}
+        onClose={() => setOpenAlert(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert onClose={() => setOpenAlert(false)} severity="success" sx={{ width: '100%' }}>
+          Item added to cart successfully!
+        </Alert>
+      </Snackbar>
     </>
 
 
   );
 };
 
-export default RestaurantFood;
+export default RestaurantFood;

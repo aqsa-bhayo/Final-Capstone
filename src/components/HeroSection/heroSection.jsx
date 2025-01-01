@@ -6,7 +6,7 @@ import {
   TextField,
   InputAdornment,
 } from "@mui/material";
-import heroImage from "../../assets/refresh-hero-home-pk.webp"; // Import the image
+import heroImage from "../../assets/refresh-hero-home-pk.webp";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 
 export default function HeroSection() {
@@ -31,7 +31,7 @@ export default function HeroSection() {
             padding: { xs: 2, sm: 5 },
             textAlign: { xs: "center", sm: "left" },
             "@media (max-width: 1280px) and (min-width: 800px)": {
-              padding: 3, // Optional: add padding adjustments if needed
+              padding: 3,
             },
           }}
         >
@@ -40,30 +40,21 @@ export default function HeroSection() {
             sx={{
               fontFamily: '"Open Sans", Arial, sans-serif',
               fontWeight: 700,
-              fontSize: { xs: "28px", sm: "35px", md: "38px" },
-              color: "rgb(51, 51, 51)",
-              lineHeight: 1.3,
-              marginBottom: 3,
+              fontSize: { xs: "32px", sm: "42px", md: "48px" },
+              color: "#333333",
+              lineHeight: 1.2,
+              marginBottom: 4,
               marginLeft: { xs: 0, sm: "190px" },
               "@media (max-width: 1280px) and (min-width: 800px)": {
-                marginLeft: "60px", // Adjust for screens between 1280px and 800px
-                fontSize: "32px", // Adjust font size
-                marginTop: "60px", // Adjust top margin
-                whiteSpace: "nowrap", // Prevent line breaks
+                marginLeft: "60px",
+                fontSize: "38px",
+                marginTop: "20px",
               },
             }}
           >
-            It's the food and groceries you love,{" "}
-            <span
-              style={{
-                display: "inline",
-                "@media (max-width: 1280px) and (min-width: 800px)": {
-                  display: "none", // Hide the line break on laptop screens
-                },
-              }}
-            >
-              <br />
-            </span>
+            It's the food and groceries{" "}
+            <span style={{ color: "#e21b70" }}>you love</span>,{" "}
+            <br />
             delivered
           </Typography>
 
@@ -71,57 +62,61 @@ export default function HeroSection() {
           <Box
             sx={{
               backgroundColor: "#ffffff",
-              padding: 2,
+              padding: { xs: 2, sm: 3 },
               borderRadius: 2,
-              boxShadow: "0px 0px 56px 6px rgba(0, 0, 0, 0.2)",
+              boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.08)",
               display: "flex",
               flexDirection: { xs: "column", sm: "row" },
               alignItems: "center",
-              justifyContent: "center",
-              marginLeft: { xs: 0, sm: "190px" },
               gap: 2,
+              marginLeft: { xs: 0, sm: "190px" },
+              maxWidth: "550px",
               "@media (max-width: 1280px) and (min-width: 800px)": {
-                marginLeft: "58px", // Adjust for screens between 1280px and 800px
-                padding: 3, // Optional: adjust padding if needed
+                marginLeft: "58px",
+                padding: "24px",
               },
             }}
           >
             {/* Input Field */}
             <TextField
-              placeholder="Your street and street number"
+              placeholder="Enter your full street address"
               variant="outlined"
               fullWidth
               sx={{
-                maxWidth: { xs: "100%", sm: 500 },
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: 2,
-                  height: 47,
-                  fontSize: 14,
+                  backgroundColor: "#f7f7f7",
+                  borderRadius: 1,
+                  height: 54,
+                  "&:hover fieldset": {
+                    borderColor: "#e21b70",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#e21b70",
+                  },
                 },
                 "& .MuiInputBase-input": {
-                  padding: "10px",
                   fontSize: 16,
-                },
-                "@media (max-width: 1280px) and (min-width: 800px)": {
-                  "& .MuiOutlinedInput-root": {
-                    height: 50, // Adjust height for screens between 1280px and 800px
+                  "&::placeholder": {
+                    color: "#666",
+                    opacity: 1,
                   },
-                  fontSize: 16, // Adjust font size if needed
                 },
               }}
               InputProps={{
-                style: { fontSize: 18 },
                 endAdornment: (
                   <InputAdornment position="end">
                     <Button
                       sx={{
-                        color: "#c21760",
+                        color: "#e21b70",
                         fontWeight: 600,
-                        fontSize: 14,
+                        fontSize: 15,
                         textTransform: "none",
-                        "@media (max-width: 1280px) and (min-width: 800px)": {
-                          fontSize: 16, // Adjust font size for screens between 1280px and 800px
+                        "&:hover": {
+                          backgroundColor: "transparent",
+                          opacity: 0.8,
                         },
+                        minWidth: "auto",
+                        padding: "8px 12px",
                       }}
                       startIcon={<MyLocationIcon />}
                     >
@@ -135,22 +130,19 @@ export default function HeroSection() {
             {/* Find Food Button */}
             <Button
               sx={{
-                backgroundColor: "#c21760",
+                backgroundColor: "#e21b70",
                 color: "#ffffff",
-                borderRadius: 2,
-                paddingX: 3,
-                paddingY: 1,
+                borderRadius: 1,
+                padding: "15px 24px",
                 fontWeight: 600,
-                fontSize: { xs: "14px", sm: "16px" },
+                fontSize: { xs: "15px", sm: "16px" },
                 width: { xs: "100%", sm: "auto" },
+                whiteSpace: "nowrap",
+                minWidth: { sm: "140px" },
                 "&:hover": {
-                  backgroundColor: "#a80348f5",
+                  backgroundColor: "#c21760",
                 },
-                "@media (max-width: 1280px) and (min-width: 800px)": {
-                  px: 2, // Adjust horizontal padding for screens between 1280px and 800px
-                  fontSize: "15px", // Adjust font size for this range
-                  py: 0,
-                },
+                textTransform: "none",
               }}
             >
               Find Food
@@ -162,14 +154,14 @@ export default function HeroSection() {
         <Box
           sx={{
             flex: 1,
-            height: { xs: "300px", sm: "100%", md: "1000px" }, // Adjust height for medium screens
+            height: { xs: "300px", sm: "100%", md: "1000px" },
             maxHeight: 650,
             backgroundImage: `url(${heroImage})`,
-            backgroundSize: "cover", // Ensure the image covers the container
-            backgroundPosition: "center", // Keep the image centered
-            backgroundRepeat: "no-repeat", // Avoid repeating the background image
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
             marginLeft: { sm: "auto" },
-            width: { xs: "100%", sm: "40%", md: "50%" }, // Adjust width for larger screens (e.g., laptops)
+            width: { xs: "100%", sm: "40%", md: "50%" },
           }}
         ></Box>
       </Box>

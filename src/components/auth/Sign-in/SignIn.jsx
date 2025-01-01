@@ -49,11 +49,18 @@ const Login = () => {
         className="bg-white shadow-lg rounded-xl border-4 border-pink-500 p-14 px-16 min-w-96 min-h-[500px] max-w-lg flex flex-col items-start"
       >
         <h2 className="text-4xl mb-8 text-pink-600 font-bold self-center">Sign In</h2>
+
         <div className="w-full mb-6">
           <label className="text-black text-lg">Email</label>
           <input
             type="email"
-            {...register("email", { required: "Email is required" })}
+            {...register("email", { 
+              required: "Email is required",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Invalid email format"
+              }
+            })}
             placeholder="Enter your email"
             className={`my-3 bg-transparent text-black placeholder:text-black border-2 rounded-lg w-full p-3 text-lg outline-none ${
               errors.email ? "border-red-500" : "border-pink-500"
@@ -66,7 +73,9 @@ const Login = () => {
           <label className="text-black text-lg">Password</label>
           <input
             type="password"
-            {...register("password", { required: "Password is required" })}
+            {...register("password", { 
+              required: "Password is required" 
+            })}
             placeholder="Enter your password"
             className={`my-3 bg-transparent text-black placeholder:text-black border-2 rounded-lg w-full p-3 text-lg outline-none ${
               errors.password ? "border-red-500" : "border-pink-500"
