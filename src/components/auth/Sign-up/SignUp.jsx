@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import pageBg from "../../../assets/sign-in-up.webp";
+import pageBg from "../../../assets/bg.gif";
 import { Snackbar } from "@mui/material";
 
 const SignUp = () => {
