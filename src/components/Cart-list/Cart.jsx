@@ -22,15 +22,15 @@ import { useNavigate } from 'react-router-dom'; // Importing useNavigate
 
 const CartDrawer = ({ open, onClose }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();  // Initialize useNavigate
+  const navigate = useNavigate(); // Initialize useNavigate
   const { items, totalAmount, totalQuantity } = useSelector((state) => state.cart);
 
   console.log('Cart State:', { items, totalAmount, totalQuantity });
 
   // Navigate to delivery page on checkout
   const handleCheckout = () => {
-    dispatch(clearCart());  // Clear the cart before navigating
-    navigate('/delivery');  // Navigate to the delivery page
+    dispatch(clearCart()); // Clear the cart before navigating
+    navigate('/delivery'); // Navigate to the delivery page
   };
 
   return (
@@ -91,7 +91,6 @@ const CartDrawer = ({ open, onClose }) => {
                       {item.name}
                     </Typography>
 
-                    {/* Only show price once */}
                     <Typography variant="body2" color="text.secondary">
                       Rs. {parseFloat(item.price.replace(/[^0-9.]/g, ''))}
                     </Typography>
@@ -116,11 +115,19 @@ const CartDrawer = ({ open, onClose }) => {
                     </Box>
                   </Box>
 
-                  {/* Item Total - Only show the total price */}
+                  {/* Item Total */}
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                     <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
                       Rs. {item.totalPrice}
                     </Typography>
+                    <IconButton
+                      size="small"
+                      color="error"
+                      onClick={() => dispatch(removeFromCart(item.id))} // Remove item from cart
+                      sx={{ mt: 1 }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
                   </Box>
                 </Box>
               </ListItem>
@@ -165,7 +172,7 @@ const CartDrawer = ({ open, onClose }) => {
                 variant="outlined"
                 color="error"
                 startIcon={<DeleteIcon />}
-                onClick={() => dispatch(clearCart())} // Dispatch clearCart action on click
+                onClick={() => dispatch(clearCart())}
                 fullWidth
                 sx={{
                   borderColor: '#df3f83',
@@ -188,7 +195,7 @@ const CartDrawer = ({ open, onClose }) => {
                   width: '100%',
                   padding: '12px',
                 }}
-                onClick={handleCheckout} // Redirect to delivery page and clear cart
+                onClick={handleCheckout}
               >
                 Checkout
               </Button>

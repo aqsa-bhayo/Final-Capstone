@@ -2,7 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import pageBg from "../../../assets/bg-1.gif";
-import { Snackbar, Alert } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+  Paper,
+} from "@mui/material";
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -33,102 +41,126 @@ const Login = () => {
   }, [snackbar.open]);
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         backgroundImage: `url(${pageBg})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         width: "100%",
         height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
-      className="flex flex-col justify-center items-center"
     >
-      <form
+      <Paper
+        component="form"
         onSubmit={handleSubmit(handleLogin)}
-        className="bg-white shadow-lg rounded-xl border-4 border-pink-500 p-14 px-16 min-w-96 min-h-[500px] max-w-lg flex flex-col items-start"
+        sx={{
+          p: 8,
+          maxWidth: 700, // Increased form width
+          minWidth: 550, // Larger minimum width
+          height: 600, // Fixed height for larger form
+          borderRadius: 6,
+          boxShadow: 5,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
       >
-        <h2 className="text-4xl mb-8 text-pink-600 font-bold self-center">Sign In</h2>
+        <Typography
+          variant="h3"
+          align="center"
+          gutterBottom
+          sx={{ color: "#EC4899", fontWeight: "bold" }}
+        >
+          Sign In
+        </Typography>
 
-        <div className="w-full mb-6">
-          <label className="text-black text-lg">Email</label>
-          <input
-            type="email"
-            {...register("email", { 
+        <Box sx={{ mb: 3 }}>
+          <TextField
+            {...register("email", {
               required: "Email is required",
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "Invalid email format"
-              }
+                message: "Invalid email format",
+              },
             })}
-            placeholder="Enter your email"
-            className={`my-3 bg-transparent text-black placeholder:text-black border-2 rounded-lg w-full p-3 text-lg outline-none ${
-              errors.email ? "border-red-500" : "border-pink-500"
-            }`}
+            label="Email"
+            variant="outlined"
+            fullWidth
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
-          {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-        </div>
+        </Box>
 
-        <div className="w-full mb-6">
-          <label className="text-black text-lg">Password</label>
-          <input
+        <Box sx={{ mb: 3 }}>
+          <TextField
+            {...register("password", {
+              required: "Password is required",
+            })}
+            label="Password"
             type="password"
-            {...register("password", { 
-              required: "Password is required" 
-            })}
-            placeholder="Enter your password"
-            className={`my-3 bg-transparent text-black placeholder:text-black border-2 rounded-lg w-full p-3 text-lg outline-none ${
-              errors.password ? "border-red-500" : "border-pink-500"
-            }`}
+            variant="outlined"
+            fullWidth
+            error={!!errors.password}
+            helperText={errors.password?.message}
           />
-          {errors.password && <p className="text-red-500">{errors.password.message}</p>}
-        </div>
+        </Box>
 
-        <p className="text-md mb-6">
+        <Typography variant="body1" sx={{ textAlign: "center", mb: 4 }}>
           Don't have an account?{" "}
-          <button
-            className="text-pink-500 underline hover:text-pink-700"
+          <Button
             onClick={() => navigate("/sign-up")}
-            type="button"
+            sx={{
+              textTransform: "none",
+              color: "#EC4899", // Pink color
+              fontWeight: "bold",
+            }}
           >
             Sign Up
-          </button>
-        </p>
+          </Button>
+        </Typography>
 
-        <button
-          className="px-6 py-4 text-white bg-pink-500 rounded-lg w-full hover:scale-105 transition-transform text-lg"
+        <Button
           type="submit"
+          variant="contained"
+          fullWidth
+          sx={{
+            bgcolor: "#EC4899", // Pink button
+            color: "#FFF",
+            fontSize: "1.2rem", // Larger text
+            py: 2, // Taller button
+            "&:hover": {
+              bgcolor: "#D81B60", // Darker pink on hover
+            },
+          }}
         >
           Sign In
-        </button>
-      </form>
+        </Button>
+      </Paper>
 
       {/* Customized Snackbar */}
       <Snackbar
         open={snackbar.open}
         onClose={closeSnackbar}
         autoHideDuration={3000}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }} // Position at the top center
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={closeSnackbar}
           severity={snackbar.severity}
           variant="filled"
           sx={{
-            backgroundColor: "#fff", // White background
-            color: "#EC4899", // Pink text color
-            fontWeight: "bold", // Bold text
-            fontSize: "16px", // Font size
-            padding: "16px",
-            borderRadius: "8px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Soft shadow effect
-            textAlign: "center", // Center text alignment
+            fontWeight: "bold",
+            textAlign: "center",
           }}
         >
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </div>
+    </Box>
   );
 };
 

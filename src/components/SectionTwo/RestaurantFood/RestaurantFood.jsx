@@ -482,141 +482,141 @@ const RestaurantFood = () => {
 
   return (
     <>
-      <Header />
+    <Header />
 
-      {/* Restaurant Details */}
-      <div className="p-6">
-        <h1 className="text-2xl font-bold mb-6 text-center" style={{ color: ' #ff3366' }}>
-          {restaurant.name}
-        </h1>
-        <p className="text-md text-gray-600">{restaurant.description}</p>
-      </div>
+    {/* Restaurant Details */}
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6 text-center" style={{ color: '#ff3366' }}>
+        {restaurant.name}
+      </h1>
+      <p className="text-md text-gray-600">{restaurant.description}</p>
+    </div>
 
-      {/* Tabs Section */}
-      <div
-        className="tabs-container"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          marginBottom: '30px',
-          marginTop: '40px',
-          backgroundColor: '#f8f8f8',
-          padding: '10px',
-          borderRadius: '8px',
-          width: '77%',
-          marginLeft: '12.5%',
-          marginRight: 'auto',
-          overflowX: 'auto',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {['All', 'Popular', 'Starters', 'Premium Burgers', 'Classic Burgers', 'Fries', 'Shakes', 'Beverages'].map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            style={{
-              border: 'none',
-              background: 'none',
-              padding: '10px 20px',
-              cursor: 'pointer',
-              fontSize: '16px',
-              color: '#ff3366',
-              fontWeight: activeTab === tab ? 'bold' : 'normal',
-              borderBottom: activeTab === tab ? '2px solid #ff3366' : 'none',
-              flex: 'none',
-              textAlign: 'center',
-              marginRight: '10px',
-            }}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
+    {/* Tabs Section */}
+    <div
+      className="tabs-container"
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        marginBottom: '30px',
+        marginTop: '40px',
+        backgroundColor: '#f8f8f8',
+        padding: '10px',
+        borderRadius: '8px',
+        width: '77%',
+        marginLeft: '12.5%',
+        marginRight: 'auto',
+        overflowX: 'auto',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {['All', 'Popular', 'Starters', 'Premium Burgers', 'Classic Burgers', 'Fries', 'Shakes', 'Beverages'].map((tab) => (
+        <Button
+          key={tab}
+          onClick={() => setActiveTab(tab)}
+          style={{
+            border: 'none',
+            background: 'none',
+            padding: '10px 20px',
+            cursor: 'pointer',
+            fontSize: '16px',
+            color: '#ff3366',
+            fontWeight: activeTab === tab ? 'bold' : 'normal',
+            borderBottom: activeTab === tab ? '2px solid #ff3366' : 'none',
+            flex: 'none',
+            textAlign: 'center',
+            marginRight: '10px',
+          }}
+        >
+          {tab}
+        </Button>
+      ))}
+    </div>
 
-      {/* Product List */}
-      <div className="p-6">
-        {restaurant.products
-          .filter((product) => activeTab === 'All' || product.title === activeTab)
-          .map((product, productIndex) => (
-            <div key={productIndex} className="mb-4">
-              <Container maxWidth="xl">
-                <div className="text-left">
-                  <h2 className="text-xl font-semibold mb-2 ms-5" style={{ color: '#ff3366' }}>
-                    {product.title}
-                  </h2>
-                </div>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {product.items.map((item) => (
-                    <div key={item.id} className="p-4 border rounded flex flex-col sm:flex-row justify-between">
-                      <div className="sm:w-1/2">
-                        <h3 className="text-lg font-medium">{item.name}</h3>
-                        <p className="text-sm text-gray-600">{item.description}</p>
-                        <div className="mt-2">
-                          <p className="text-lg font-bold text-blue-500">Rs. {item.price}</p>
-                          {item.oldPrice && (
-                            <p className="text-sm text-gray-500 line-through">Rs. {item.oldPrice}</p>
-                          )}
-                        </div>
-
-                        <Button
-                          onClick={() => handleAddToCart(item)} // Dispatch addToCart when clicked
-                          sx={{
-                            minWidth: '35px',
-                            height: '35px',
-                            padding: '8px',
-                            marginBottom: '20px',
-                            backgroundColor: '#d70f64',
-                            color: 'white',
-                            borderRadius: '8px',
-                            '&:hover': {
-                              backgroundColor: '#c20c59',
-                            },
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <AddIcon sx={{ fontSize: 20 }} />
-                        </Button>
+    {/* Product List */}
+    <div className="p-6">
+      {restaurant.products
+        .filter((product) => activeTab === 'All' || product.title === activeTab)
+        .map((product, productIndex) => (
+          <div key={productIndex} className="mb-4">
+            <Container maxWidth="xl">
+              <div className="text-left">
+                <h2 className="text-xl font-semibold mb-2 ms-5" style={{ color: '#ff3366' }}>
+                  {product.title}
+                </h2>
+              </div>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {product.items.map((item) => (
+                  <div key={item.id} className="p-4 border rounded flex flex-col sm:flex-row justify-between">
+                    <div className="sm:w-1/2">
+                      <h3 className="text-lg font-medium">{item.name}</h3>
+                      <p className="text-sm text-gray-600">{item.description}</p>
+                      <div className="mt-2">
+                        <p className="text-lg font-bold text-blue-500">Rs. {item.price}</p>
+                        {item.oldPrice && (
+                          <p className="text-sm text-gray-500 line-through">Rs. {item.oldPrice}</p>
+                        )}
                       </div>
 
-                      {/* Image */}
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full sm:w-1/2 aspect-square object-cover rounded mb-2 sm:mb-0"
-                      />
+                      <Button
+                        onClick={() => handleAddToCart(item)}
+                        sx={{
+                          minWidth: '35px',
+                          height: '35px',
+                          padding: '8px',
+                          marginBottom: '20px',
+                          backgroundColor: '#d70f64',
+                          color: 'white',
+                          borderRadius: '8px',
+                          '&:hover': {
+                            backgroundColor: '#c20c59',
+                          },
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <AddIcon sx={{ fontSize: 20 }} />
+                      </Button>
                     </div>
-                  ))}
-                </ul>
-              </Container>
-            </div>
-          ))}
-      </div>
 
-      <Footer />
+                    {/* Image */}
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full sm:w-1/2 aspect-square object-cover rounded mb-2 sm:mb-0"
+                    />
+                  </div>
+                ))}
+              </ul>
+            </Container>
+          </div>
+        ))}
+    </div>
 
-      {/* Add Snackbar */}
-      <Snackbar
-        open={openAlert}
-        autoHideDuration={3000}
-        onClose={() => setOpenAlert(false)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert onClose={() => setOpenAlert(false)} severity="success" sx={{ width: '100%' }}>
-          Item added to cart successfully!
-        </Alert>
-      </Snackbar>
+    <Footer />
 
-      {/* Add Media Query for Mobile */}
-      <style jsx>{`
+    {/* Add Snackbar */}
+    <Snackbar
+      open={openAlert}
+      autoHideDuration={3000}
+      onClose={() => setOpenAlert(false)}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+    >
+      <Alert onClose={() => setOpenAlert(false)} severity="success" sx={{ width: '100%' }}>
+        Item added to cart successfully!
+      </Alert>
+    </Snackbar>
+
+    {/* Add Media Query for Mobile */}
+    <style jsx>{`
       @media (min-width: 390px) and (max-width: 844px) {
         .tabs-container {
           display: none;
         }
       }
     `}</style>
-    </>
+  </>
 
   );
 };

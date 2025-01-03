@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import pageBg from "../../../assets/bg.gif";
-import { Snackbar } from "@mui/material";
+import {
+  Box,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 
 const SignUp = () => {
   const [open, setOpen] = useState(false);
@@ -29,40 +37,56 @@ const SignUp = () => {
   };
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         backgroundImage: `url(${pageBg})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         width: "100%",
         height: "100vh", // Full viewport height
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
-      className="flex flex-col justify-center items-center" // Center both horizontally and vertically
     >
-      <div className="w-full max-w-lg bg-white border-4 rounded-xl border-pink-500 p-10 flex flex-col items-start justify-between">
-        <h2 className="text-3xl mb-7 text-pink-600 font-bold">Sign Up</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+      <Paper
+        sx={{
+          width: "100%",
+          maxWidth: "600px",
+          padding: "32px",
+          border: "4px solid #EC4899",
+          borderRadius: "16px",
+        }}
+      >
+        <Typography variant="h4" color="primary" sx={{ mb: 4, fontWeight: "bold", color: "#EC4899" }}>
+          Sign Up
+        </Typography>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
           {/* Name Field */}
-          <div className="w-full mb-4">
-            <label className="text-black text-lg">Name</label>
-            <input
-              type="text"
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="body1" sx={{ mb: 1, color: "black" }}>Name</Typography>
+            <TextField
+              fullWidth
               {...register("name", { required: "Name is required" })}
               placeholder="Enter your name"
-              className="my-2 bg-transparent text-black placeholder:text-black border-2 rounded-lg w-full border-pink-500 placeholder:p-2 p-2 text-lg outline-none"
-              style={errors.name && { border: "2px solid red" }}
+              variant="outlined"
+              error={!!errors.name}
+              helperText={errors.name?.message}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "8px",
+                },
+              }}
             />
-            {errors.name && (
-              <p className="text-red-500">{errors.name.message}</p>
-            )}
-          </div>
+          </Box>
 
           {/* Email Field */}
-          <div className="w-full mb-4">
-            <label className="text-black text-lg">Email</label>
-            <input
-              type="email"
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="body1" sx={{ mb: 1, color: "black" }}>Email</Typography>
+            <TextField
+              fullWidth
               {...register("email", {
                 required: "Email is required",
                 pattern: {
@@ -71,18 +95,22 @@ const SignUp = () => {
                 },
               })}
               placeholder="Enter your email"
-              className="my-2 bg-transparent w-full text-black placeholder:text-black border-2 rounded-lg border-pink-500 placeholder:p-2 p-2 text-lg outline-none"
-              style={errors.email && { border: "2px solid red" }}
+              variant="outlined"
+              error={!!errors.email}
+              helperText={errors.email?.message}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "8px",
+                },
+              }}
             />
-            {errors.email && (
-              <p className="text-red-500">{errors.email.message}</p>
-            )}
-          </div>
+          </Box>
 
           {/* Password Field */}
-          <div className="w-full mb-4">
-            <label className="text-black text-lg">Password</label>
-            <input
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="body1" sx={{ mb: 1, color: "black" }}>Password</Typography>
+            <TextField
+              fullWidth
               type="password"
               {...register("password", {
                 required: "Password is required",
@@ -92,68 +120,77 @@ const SignUp = () => {
                 },
               })}
               placeholder="Enter your password"
-              className="my-2 bg-transparent w-full text-black placeholder:text-black border-2 rounded-lg border-pink-500 placeholder:p-2 p-2 text-lg outline-none"
-              style={errors.password && { border: "2px solid red" }}
+              variant="outlined"
+              error={!!errors.password}
+              helperText={errors.password?.message}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "8px",
+                },
+              }}
             />
-            {errors.password && (
-              <p className="text-red-500">{errors.password.message}</p>
-            )}
-          </div>
+          </Box>
 
           {/* Already have an account? */}
-          <p className="text-md my-3">
+          <Typography variant="body2" sx={{ mb: 3 }}>
             Already have an account?{" "}
-            <button
-              type="button"
-              className="text-pink-500 underline"
+            <Button
+              variant="text"
               onClick={() => navigate("/sign-in")}
+              sx={{
+                textTransform: "none",
+                color: "#EC4899",
+                fontWeight: "bold",
+              }}
             >
               Login
-            </button>
-          </p>
+            </Button>
+          </Typography>
 
           {/* Sign Up Button */}
-          <button
+          <Button
             type="submit"
-            className="px-4 py-3 text-white bg-pink-500 rounded-lg hover:scale-110 transition-all w-full"
+            fullWidth
+            variant="contained"
+            sx={{
+              bgcolor: "#EC4899",
+              color: "white",
+              py: 2,
+              borderRadius: "8px",
+              fontWeight: "bold",
+              fontSize: "1rem",
+              "&:hover": {
+                bgcolor: "#D81B60",
+              },
+            }}
           >
             Sign Up
-          </button>
+          </Button>
         </form>
-      </div>
+      </Paper>
 
       {/* Customized Snackbar for Successful Sign Up */}
       <Snackbar
         open={open}
         onClose={closeSnackbar}
         autoHideDuration={6000}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }} // Set to top center
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <div
-          style={{
-            backgroundColor: "#fff", // White background
-            padding: "16px",
-            borderRadius: "8px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            maxWidth: "400px",
-            color: "#EC4899", // Pink text
-            fontWeight: "bold", // Bold text
-            fontSize: "16px",
+        <Alert
+          onClose={closeSnackbar}
+          severity="success"
+          variant="filled"
+          sx={{
+            bgcolor: "white",
+            color: "#EC4899",
+            fontWeight: "bold",
+            textAlign: "center",
           }}
         >
-          <span
-            style={{
-              textAlign: "center",
-            }}
-          >
-            ✅ <span>Sign Up successful! Please login.</span>
-          </span>
-        </div>
+          Sign Up successful! Please login.
+        </Alert>
       </Snackbar>
-    </div>
+    </Box>
   );
 };
 

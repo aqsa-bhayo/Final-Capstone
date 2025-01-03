@@ -48,15 +48,15 @@ const Restaurants = () => {
 
   const isFavorite = (restaurant) => favorites.some((item) => item.id === restaurant.id);
   const toggleFavorite = (restaurant) => {
-    console.log("Toggling favorite for:", restaurant); 
+    console.log("Toggling favorite for:", restaurant);
     if (isFavorite(restaurant)) {
-      console.log("Removing from favorites", restaurant.id); 
-      dispatch(removeFavorite(restaurant.id));  
+      console.log("Removing from favorites", restaurant.id);
+      dispatch(removeFavorite(restaurant.id));
     } else {
-      console.log("Adding to favorites", restaurant); 
-      dispatch(addFavorite(restaurant)); 
+      console.log("Adding to favorites", restaurant);
+      dispatch(addFavorite(restaurant));
     }
-    
+
     navigate("");
   };
 
@@ -82,7 +82,7 @@ const Restaurants = () => {
             padding: { xs: 2, sm: 5 },
             textAlign: { xs: "center", sm: "left" },
             "@media (max-width: 1280px) and (min-width: 800px)": {
-              padding: 3, 
+              padding: 3,
             },
           }}
         >
@@ -97,13 +97,13 @@ const Restaurants = () => {
               marginBottom: 3,
               marginLeft: { xs: 0, sm: "190px" },
               "@media (max-width: 1280px) and (min-width: 800px)": {
-                marginLeft: "60px", 
-                fontSize: "32px", 
-                marginTop: "60px", 
-                whiteSpace: "nowrap", 
+                marginLeft: "60px",
+                fontSize: "32px",
+                marginTop: "60px",
+                whiteSpace: "nowrap",
               },
               "@media (max-width: 800px)": {
-                marginLeft: 0, 
+                marginLeft: 0,
               },
             }}
           >
@@ -136,71 +136,71 @@ const Restaurants = () => {
 
       {/* Top Restaurants */}
       <div className="px-16 max-sm:px-0 pt-10">
-  <Container maxWidth="xl">
-    <h1 className="text-2xl font-bold mb-6">Top Restaurants</h1>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {restaurantsSectionOne.map((restaurant) => (
-        <div
-          key={restaurant.id}
-          className="bg-white shadow-lg rounded-xl overflow-hidden cursor-pointer relative"
-        >
-          {/* Image Section */}
-          <div className="w-full h-60 relative">
-            <img
-              src={restaurant.image}
-              alt={restaurant.name}
-              onClick={() => navigate(`/restaurant/${restaurant.id}`)}
-              className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
-            />
-            {/* Discount 1 */}
-            <div
-              className="absolute top-2 left-2 px-2  rounded-md"
-              style={{
-                backgroundColor: "rgba(255, 20, 147, 0.9)", // Pink background
-                color: "white", // White text
-                marginBottom: "4px", // Adds space below this box
-              }}
-            >
-              <p className="text-xs font-semibold mb-2">{restaurant.discount1}</p>
-            </div>
-            {/* Discount 2 */}
-            <div
-  className="absolute top-12 left-2 px-2 py-1 rounded-md"
-  style={{
-    backgroundColor: "rgba(255, 20, 147, 0.9)", // Pink background
-    color: "white", // White text
-    lineHeight: "1", // Reduces line height for tighter spacing
-  }}
->
-  <p className="text-xs font-semibold m-0">{restaurant.discount2}</p>
-</div>
+        <Container maxWidth="xl">
+          <h1 className="text-2xl font-bold mb-6">Top Restaurants</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {restaurantsSectionOne.map((restaurant) => (
+              <div
+                key={restaurant.id}
+                className="bg-white shadow-lg rounded-xl overflow-hidden cursor-pointer relative"
+              >
+                {/* Image Section */}
+                <div className="w-full h-60 relative">
+                  <img
+                    src={restaurant.image}
+                    alt={restaurant.name}
+                    onClick={() => navigate(`/restaurant/${restaurant.id}`)}
+                    className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
+                  />
+                  {/* Discount 1 */}
+                  <div
+                    className="absolute top-2 left-2 px-2  rounded-md"
+                    style={{
+                      backgroundColor: "rgba(255, 20, 147, 0.9)", // Pink background
+                      color: "white", // White text
+                      marginBottom: "4px", // Adds space below this box
+                    }}
+                  >
+                    <p className="text-xs font-semibold mb-2">{restaurant.discount1}</p>
+                  </div>
+                  {/* Discount 2 */}
+                  <div
+                    className="absolute top-12 left-2 px-2 py-1 rounded-md"
+                    style={{
+                      backgroundColor: "rgba(255, 20, 147, 0.9)", // Pink background
+                      color: "white", // White text
+                      lineHeight: "1", // Reduces line height for tighter spacing
+                    }}
+                  >
+                    <p className="text-xs font-semibold m-0">{restaurant.discount2}</p>
+                  </div>
 
+                </div>
+                {/* Text Section */}
+                <div className="py-2 px-3">
+                  <h3 className="text-sm font-semibold">{restaurant.name}</h3>
+                  <div className="flex justify-between">
+                    <p className="text-gray-600 text-sm">{restaurant.category}</p>
+                    <p className="text-gray-600 text-xs font-light">
+                      <span>⭐</span> {restaurant.rating}
+                    </p>
+                  </div>
+                  <button
+                    className="absolute top-2 right-2 bg-white hover:bg-zinc-100 p-2 rounded-full"
+                    onClick={() => toggleFavorite(restaurant)}
+                  >
+                    {isFavorite(restaurant) ? (
+                      <FavoriteIcon sx={{ fontSize: "23px", color: "red" }} />
+                    ) : (
+                      <FavoriteBorderIcon sx={{ fontSize: "23px" }} />
+                    )}
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-          {/* Text Section */}
-          <div className="py-2 px-3">
-            <h3 className="text-sm font-semibold">{restaurant.name}</h3>
-            <div className="flex justify-between">
-              <p className="text-gray-600 text-sm">{restaurant.category}</p>
-              <p className="text-gray-600 text-xs font-light">
-                <span>⭐</span> {restaurant.rating}
-              </p>
-            </div>
-            <button
-              className="absolute top-2 right-2 bg-white hover:bg-zinc-100 p-2 rounded-full"
-              onClick={() => toggleFavorite(restaurant)}
-            >
-              {isFavorite(restaurant) ? (
-                <FavoriteIcon sx={{ fontSize: "23px", color: "red" }} />
-              ) : (
-                <FavoriteBorderIcon sx={{ fontSize: "23px" }} />
-              )}
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-  </Container>
-</div>
+        </Container>
+      </div>
 
       {/* Closed Restaurants */}
       <div className="px-16 max-sm:px-0 pt-10">

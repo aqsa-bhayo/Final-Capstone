@@ -113,23 +113,23 @@ export default function Header() {
           <Toolbar>
             {/* Logo */}
             <Typography
-  variant="h6"
-  noWrap
-  component="div"
-  sx={{
-    display: { xs: 'none', sm: 'block' },
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    mr: 2,
-    color: '#d70f64',
-    display: 'flex', // Added to align the image and text horizontally
-    alignItems: 'center', // Vertically center the text and logo
-  }}
-  onClick={() => navigate('/')}
->
-  <img src={logo} alt="foodpanda logo" style={{ height: '30px', marginRight: '8px' }} />
-  foodpanda
-</Typography>
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                display: { xs: 'none', sm: 'block' },
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                mr: 2,
+                color: '#d70f64',
+                display: 'flex', // Added to align the image and text horizontally
+                alignItems: 'center', // Vertically center the text and logo
+              }}
+              onClick={() => navigate('/')}
+            >
+              <img src={logo} alt="foodpanda logo" style={{ height: '30px', marginRight: '8px' }} />
+              foodpanda
+            </Typography>
 
             {/* Location Button */}
             <Button

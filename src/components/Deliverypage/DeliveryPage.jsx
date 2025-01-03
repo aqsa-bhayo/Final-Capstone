@@ -1,173 +1,316 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useForm, Controller } from "react-hook-form";
+import { setDeliveryInfo } from "../../redux/deliverySlice";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Divider,
+  ToggleButtonGroup,
+  ToggleButton,
+  Switch,
+  FormControlLabel,
+  Paper,
+  Modal,
+} from "@mui/material";
 import Header from "../Header/Header";
-import { Box } from "@mui/material";
 import Footer from "../Footer/Footer";
 
 const DeliveryPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [orderConfirmed, setOrderConfirmed] = useState(false); // State for order confirmation
+  const [deliveryDetails, setDeliveryDetails] = useState(null);
+  const [selectedLabel, setSelectedLabel] = useState("Home");
+  const [customLabel, setCustomLabel] = useState("");
+  const [isContactless, setIsContactless] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Fetch cart items from Redux store
-  const cartItems = useSelector((state) => state.cart.items);
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
 
-  const handleConfirmClick = () => {
-    setIsModalOpen(true); // Open modal when confirm button is clicked
+  const onSubmit = (data) => {
+    const finalData = {
+      ...data,
+      label: customLabel || selectedLabel,
+      contactlessDelivery: isContactless,
+    };
+    dispatch(setDeliveryInfo(finalData));
+    setDeliveryDetails(finalData);
+    setIsModalOpen(true);
   };
 
   const handleOrderConfirm = () => {
-    setOrderConfirmed(true); // Mark order as confirmed
-    setIsModalOpen(false); // Close the modal
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false); // Close modal
-  };
-
-  const handleBuyMore = () => {
-    navigate("/restaurants"); // Navigate to the restaurant page
+    setIsModalOpen(false);
+    navigate("/restaurants");
   };
 
   return (
     <Box>
       <Header />
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-10">
-        <div className="max-w-3xl w-full bg-white shadow-xl rounded-lg p-8">
-          <h2 className="text-3xl font-semibold mb-8 text-center text-gray-800">
-            Delivery Information
-          </h2>
-
-          {/* Delivery Address Form */}
-          <div className="bg-gray-100 rounded-lg p-6 mb-8">
-            <h3 className="text-xl font-semibold text-gray-700 mb-6">Delivery Address</h3>
-            <form>
-              {/* Full Name */}
-              <div className="mb-6">
-                <label className="block text-gray-700 font-medium mb-2">Full Name</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your full name"
-                  required
-                />
-              </div>
-
-              {/* Street Address */}
-              <div className="mb-6">
-                <label className="block text-gray-700 font-medium mb-2">Street Address</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your street address"
-                  required
-                />
-              </div>
-
-              {/* Address */}
-              <div className="mb-6">
-                <label className="block text-gray-700 font-medium mb-2">Address</label>
-                <textarea
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter additional address details"
-                  rows="4"
-                  required
-                />
-              </div>
-
-              {/* Contact Number */}
-              <div className="mb-6">
-                <label className="block text-gray-700 font-medium mb-2">Contact Number</label>
-                <input
-                  type="tel"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your phone number"
-                  required
-                />
-              </div>
-
-              {/* Delivery Option */}
-              <div className="mb-6">
-                <label className="block text-gray-700 font-medium mb-2">Delivery Option</label>
-                <select
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                >
-                  <option value="standard">Standard Delivery (3-5 Days)</option>
-                  <option value="express">Express Delivery (1-2 Days)</option>
-                  <option value="same_day">Same Day Delivery</option>
-                </select>
-              </div>
-
-              {/* Tip your Rider */}
-              <div className="mb-6">
-                <label className="block text-gray-700 font-medium mb-2">Tip your Rider (Optional)</label>
-                <input
-                  type="number"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter a tip amount (e.g. 50)"
-                  min="0"
-                />
-              </div>
-            </form>
-          </div>
-
-          {/* Confirm Delivery Button */}
-          <button
-            style={{ backgroundColor: "#df3f83" }}
-            className="w-full text-white py-3 px-6 rounded-lg font-semibold text-lg hover:bg-[#df3f83] transition duration-300 ease-in-out"
-            onClick={handleConfirmClick}
+      <Box sx={{ minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", py: 4, px: 2 }}>
+        <Box sx={{ width: "100%", maxWidth: 900 }}>
+          <Typography
+            variant="h3"
+            align="center"
+            sx={{ mb: 4, fontWeight: 600, color: "#df3f83", textTransform: "uppercase" }}
           >
-            Confirm Delivery
-          </button>
-        </div>
+            Delivery Information
+          </Typography>
 
-        {/* Modal */}
-        {isModalOpen && !orderConfirmed && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-8 rounded-lg max-w-lg w-full">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-4">Order Summary</h3>
-              <p className="text-lg text-gray-700">
-                <strong>Your order from</strong> Al Kaif Pizza & Burger - Cantt
-              </p>
+          <Paper
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{
+              borderRadius: 4,
+              boxShadow: 4,
+              overflow: "hidden",
+              p: 4,
+              bgcolor: "white",
+            }}
+          >
+            <Typography variant="h5" sx={{ mb: 3, fontWeight: 500, color: "#333" }}>
+              Enter Details
+            </Typography>
+            <Divider sx={{ mb: 3 }} />
 
-              {/* Custom Message */}
-              <div className="mb-4">
-                <p className="text-lg text-gray-700">Thank you for ordering! 😊</p>
-                <p className="text-md text-gray-600">Your food is on its way and will reach your doorstep soon! 🚚🍕</p>
-                <p className="text-md text-gray-600">Sit back, relax, and enjoy your meal when it arrives! 😋</p>
-              </div>
+            <Controller
+              name="fullName"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Full name is required" }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Full Name"
+                  variant="outlined"
+                  error={!!errors.fullName}
+                  helperText={errors.fullName?.message}
+                  sx={{ mb: 3 }}
+                />
+              )}
+            />
 
-              <button
-                style={{ backgroundColor: "#df3f83" }}
-                className="w-full text-white py-2 px-6 rounded-lg font-semibold text-lg hover:bg-[#df3f83] transition duration-300 ease-in-out"
-                onClick={handleOrderConfirm}
-              >
-                Confirm Order
-              </button>
-            </div>
-          </div>
-        )}
+            <Typography variant="subtitle1" sx={{ mb: 1 }}>
+              Add a Label
+            </Typography>
+            <ToggleButtonGroup
+              value={selectedLabel}
+              exclusive
+              onChange={(e, newLabel) => {
+                if (newLabel) setSelectedLabel(newLabel);
+                setCustomLabel("");
+              }}
+              sx={{ mb: 2 }}
+            >
+              <ToggleButton value="Home">Home</ToggleButton>
+              <ToggleButton value="Work">Work</ToggleButton>
+              <ToggleButton value="Partner">Partner</ToggleButton>
+              <ToggleButton value="Other">Other</ToggleButton>
+            </ToggleButtonGroup>
+            {selectedLabel === "Other" && (
+              <TextField
+                label="Custom Label"
+                variant="outlined"
+                fullWidth
+                value={customLabel}
+                onChange={(e) => setCustomLabel(e.target.value)}
+                sx={{ mb: 3 }}
+              />
+            )}
 
-        {/* Order Confirmed State */}
-        {orderConfirmed && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-8 rounded-lg max-w-lg w-full">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-4">Thank you for your order!</h3>
-              <p>Your order has been confirmed. 🎉</p>
-              <p>Your delicious food is on its way! Get ready to enjoy! 🥳🍔🍕</p>
-              <button
-                style={{ backgroundColor: "#df3f83" }}
-                className="w-full text-white py-3 px-6 rounded-lg font-semibold text-lg hover:bg-[#df3f83] transition duration-300 ease-in-out"
-                onClick={handleBuyMore}
-              >
-                Buy More
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "Email is required",
+                pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" },
+              }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Email"
+                  variant="outlined"
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
+                  sx={{ mb: 3 }}
+                />
+              )}
+            />
+
+            <Controller
+              name="streetAddress"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Street address is required" }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Street Address"
+                  variant="outlined"
+                  error={!!errors.streetAddress}
+                  helperText={errors.streetAddress?.message}
+                  sx={{ mb: 3 }}
+                />
+              )}
+            />
+
+            <Controller
+              name="contactNumber"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "Contact number is required",
+                pattern: { value: /^[0-9]+$/, message: "Invalid phone number" },
+              }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Contact Number"
+                  variant="outlined"
+                  error={!!errors.contactNumber}
+                  helperText={errors.contactNumber?.message}
+                  sx={{ mb: 3 }}
+                />
+              )}
+            />
+
+            <Controller
+              name="deliveryOption"
+              control={control}
+              defaultValue="standard"
+              rules={{ required: "Please select a delivery option" }}
+              render={({ field }) => (
+                <FormControl fullWidth sx={{ mb: 3 }}>
+                  <InputLabel>Delivery Option</InputLabel>
+                  <Select {...field} label="Delivery Option">
+                    <MenuItem value="standard">Standard Delivery (3-5 Days)</MenuItem>
+                    <MenuItem value="express">Express Delivery (1-2 Days)</MenuItem>
+                    <MenuItem value="same_day">Same Day Delivery</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
+            />
+
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={isContactless}
+                  onChange={(e) => setIsContactless(e.target.checked)}
+                />
+              }
+              label="Contactless Delivery"
+              sx={{ mb: 3 }}
+            />
+
+            <Controller
+              name="riderTip"
+              control={control}
+              defaultValue=""
+              rules={{
+                pattern: { value: /^[0-9]+(\.[0-9]{1,2})?$/, message: "Invalid amount" },
+              }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Rider Tip (Optional)"
+                  variant="outlined"
+                  error={!!errors.riderTip}
+                  helperText={errors.riderTip?.message}
+                  sx={{ mb: 3 }}
+                />
+              )}
+            />
+
+            <Controller
+              name="deliveryInstructions"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Delivery Instructions (Optional)"
+                  variant="outlined"
+                  multiline
+                  rows={4}
+                  sx={{ mb: 3 }}
+                />
+              )}
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                bgcolor: "#df3f83",
+                "&:hover": { bgcolor: "#c82d6b" },
+                fontSize: "16px",
+                py: 1.5,
+              }}
+            >
+              Confirm Delivery
+            </Button>
+          </Paper>
+        </Box>
+      </Box>
+
+      {/* Modal for Confirmation */}
+      <Modal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        aria-labelledby="order-confirmation"
+        aria-describedby="order-details"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            borderRadius: 2,
+            boxShadow: 24,
+            p: 4,
+            textAlign: "center",
+          }}
+        >
+          <Typography id="order-confirmation" variant="h5" sx={{ mb: 2 }}>
+            Order Confirmed! 🎉
+          </Typography>
+          <Typography id="order-details" variant="body1" sx={{ mb: 3 }}>
+            Your order with the label "{customLabel || selectedLabel}" has been successfully placed. Contactless delivery is {isContactless ? "enabled" : "disabled"}.
+          </Typography>
+          <Button
+            onClick={handleOrderConfirm}
+            variant="contained"
+            sx={{
+              bgcolor: "#df3f83",
+              "&:hover": { bgcolor: "#c82d6b" },
+            }}
+          >
+            Continue to Restaurants
+          </Button>
+        </Box>
+      </Modal>
+
       <Footer />
     </Box>
   );

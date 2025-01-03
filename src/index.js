@@ -14,6 +14,7 @@ import RestaurantFood from './components/SectionTwo/RestaurantFood/RestaurantFoo
 import Favourite from './components/SectionTwo/Favourite/Favourite.jsx';
 import MyProfile from './components/myProfile/MyProfile.jsx';
 import DeliveryPage from './components/Deliverypage/DeliveryPage.jsx';
+import Error from './components/ErrorFolder/Error.jsx';
 // import FootDetailPage from './components/SectionTwo/FootDetailPage/FootDetailPage.jsx';
 
 const router = createBrowserRouter([
@@ -56,8 +57,13 @@ const router = createBrowserRouter([
   {
     path: "/delivery",
     element: <DeliveryPage />,
-  }
+  },
+  {
+    path: "*", // Catch-all route for undefined paths
+    element: <Error />, // Your Error component
+  },
 ]);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

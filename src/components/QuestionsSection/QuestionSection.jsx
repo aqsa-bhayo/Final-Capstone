@@ -1,127 +1,125 @@
 import React from "react";
-import { Container } from "@mui/material"; // Ensure to import Container if you are using it
+import { Container, Typography, Box } from "@mui/material"; // Import MUI components
 import CheckIcon from '@mui/icons-material/Check'; // Importing the CheckIcon
 
 const QuestionSection = () => {
   return (
-    <div>
-      <div className="max-sm:mx-0 mx-16 pt-5">
-        <Container maxWidth="xl" className="w-full">
-          <div>
-            <h1 className="max-sm:mt-28 mt-36 max-sm:text-sm mb-2 w-full text-3xl font-bold text-gray-900">
-              Order food and groceries online from the best restaurants and shops on foodpanda
-            </h1>
-            <p className="text-zinc-500 mb-8">
-              Are you hungry? Did you have a long and stressful day? Interested in getting a cheesy pizza delivered to your office or looking to avoid the weekly shop? Then foodpanda Pakistan is the right destination for you! foodpanda offers you a long and detailed list of the best restaurants and shops near you to help make your every day easier.
-            </p>
-          </div>
+    <Box sx={{mt:7,}}>
+      <Box sx={{ pt: 5, mx: { xs: 0, sm: 16 } }}>
+      <Container maxWidth="xl">
+        <Box>
+          <Typography variant="h4" sx={{ mt: { xs: 7, sm: 9 }, mb: 2, fontWeight: 'bold', color: 'text.primary' }}>
+            Order food and groceries online from the best restaurants and shops on foodpanda
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', mb: 8 }}>
+            Are you hungry? Did you have a long and stressful day? Interested in getting a cheesy pizza delivered to your office or looking to avoid the weekly shop? Then foodpanda Pakistan is the right destination for you! foodpanda offers you a long and detailed list of the best restaurants and shops near you to help make your every day easier.
+          </Typography>
+        </Box>
 
-          <div>
-            <h1 className="max-sm:text-sm mb-4 w-full text-3xl font-bold text-gray-900">
-              What's new?
-            </h1>
-            <p className="text-zinc-500">
-              <CheckIcon className="text-pink-600 pe-2" />
-              Wide variety of restaurants and shops, an abundance of cuisines & products.
-            </p>
-            <p className="text-zinc-500">
-              <CheckIcon className="text-pink-600 pe-2" />
-              High quality delivery service.
-            </p>
-            <p className="text-zinc-500">
-              <CheckIcon className="text-pink-600 pe-2" />
-              Live chat feature to give App users instant help when they need it.
-            </p>
-            <p className="text-zinc-500 mb-2">
-              <CheckIcon className="text-pink-600 pe-2" />
-              NEW: foodpanda grocery delivery! Discover the best shops, pharmacies, bakeries, and more near you.
-            </p>
-          </div>
+        <Box>
+          <Typography variant="h4" sx={{ mb: 4, fontWeight: 'bold', color: 'text.primary' }}>
+            What's new?
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', mb: 2 }}>
+            <CheckIcon sx={{ color: 'pink', mr: 1 }} /> Wide variety of restaurants and shops, an abundance of cuisines & products.
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', mb: 2 }}>
+            <CheckIcon sx={{ color: 'pink', mr: 1 }} /> High quality delivery service.
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', mb: 2 }}>
+            <CheckIcon sx={{ color: 'pink', mr: 1 }} /> Live chat feature to give App users instant help when they need it.
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', display: 'flex', alignItems: 'center', mb: 2 }}>
+            <CheckIcon sx={{ color: 'pink', mr: 1 }} /> NEW: foodpanda grocery delivery! Discover the best shops, pharmacies, bakeries, and more near you.
+          </Typography>
+        </Box>
 
+        <Box sx={{ my: 4 }}>
           <hr />
+        </Box>
 
-          <div>
-            <h1 className="max-sm:text-sm mb-2 mt-5 w-full text-3xl font-bold text-gray-900">
-              Frequently Asked Questions
-            </h1>
+        <Box>
+          <Typography variant="h4" sx={{ mb: 2, fontWeight: 'bold', color: 'text.primary' }}>
+            Frequently Asked Questions
+          </Typography>
 
-            <h2 className="max-sm:text-sm mb-3 mt-5 w-full text-2xl font-bold text-gray-900">
-              How can I get foodpanda delivery?
-            </h2>
-            <p className="text-zinc-500">
-              To get foodpanda delivery, simply locate the restaurants and shops near you by typing in your address, browse through a variety of restaurants and cuisines, check menus and prices, choose your dishes and add them to the basket. Now you only need to checkout and make the payment. Soon your delicious food will arrive at your doorstep!
-            </p>
+          <Typography variant="h5" sx={{ mt: 5, mb: 3, fontWeight: 'bold', color: 'text.primary' }}>
+            How can I get foodpanda delivery?
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', mb: 3 }}>
+            To get foodpanda delivery, simply locate the restaurants and shops near you by typing in your address, browse through a variety of restaurants and cuisines, check menus and prices, choose your dishes and add them to the basket. Now you only need to checkout and make the payment. Soon your delicious food will arrive at your doorstep!
+          </Typography>
 
-            <h2 className="max-sm:text-sm mb-3 mt-5 w-full text-2xl font-bold text-gray-900">
-              Which takeout restaurants open now near me?
-            </h2>
-            <p className="text-zinc-500">
-              You can check which takeout restaurants are open now near you by simply typing your address in the location bar on foodpanda and pressing search. You will see all the available restaurants and shops that deliver to your area.
-            </p>
+          <Typography variant="h5" sx={{ mt: 5, mb: 3, fontWeight: 'bold', color: 'text.primary' }}>
+            Which takeout restaurants open now near me?
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', mb: 3 }}>
+            You can check which takeout restaurants are open now near you by simply typing your address in the location bar on foodpanda and pressing search. You will see all the available restaurants and shops that deliver to your area.
+          </Typography>
 
-            <h2 className="max-sm:text-sm mb-3 mt-5 w-full text-2xl font-bold text-gray-900">
-              Does foodpanda deliver 24 hours?
-            </h2>
-            <p className="text-zinc-500">
-              Yes, foodpanda in Pakistan delivers 24 hours. However, many restaurants may be unavailable for a late-night delivery. Please check which places in Pakistan deliver to you within 24 hours by using your address. You can also order groceries 24 hours a day via pandamart.
-            </p>
+          <Typography variant="h5" sx={{ mt: 5, mb: 3, fontWeight: 'bold', color: 'text.primary' }}>
+            Does foodpanda deliver 24 hours?
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', mb: 3 }}>
+            Yes, foodpanda in Pakistan delivers 24 hours. However, many restaurants may be unavailable for a late-night delivery. Please check which places in Pakistan deliver to you within 24 hours by using your address. You can also order groceries 24 hours a day via pandamart.
+          </Typography>
 
-            <h2 className="max-sm:text-sm mb-3 mt-5 w-full text-2xl font-bold text-gray-900">
-              Can you pay cash for foodpanda?
-            </h2>
-            <p className="text-zinc-500">
-              Yes, you can pay cash on delivery for foodpanda in Pakistan.
-            </p>
+          <Typography variant="h5" sx={{ mt: 5, mb: 3, fontWeight: 'bold', color: 'text.primary' }}>
+            Can you pay cash for foodpanda?
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', mb: 3 }}>
+            Yes, you can pay cash on delivery for foodpanda in Pakistan.
+          </Typography>
 
-            <h2 className="max-sm:text-sm mb-3 mt-5 w-full text-2xl font-bold text-gray-900">
-              How can I pay foodpanda online?
-            </h2>
-            <p className="text-zinc-500">
-              You can pay online while ordering at foodpanda Pakistan by using a credit or debit card or PayPal.
-            </p>
+          <Typography variant="h5" sx={{ mt: 5, mb: 3, fontWeight: 'bold', color: 'text.primary' }}>
+            How can I pay foodpanda online?
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', mb: 3 }}>
+            You can pay online while ordering at foodpanda Pakistan by using a credit or debit card or PayPal.
+          </Typography>
 
-            <h2 className="max-sm:text-sm mb-3 mt-5 w-full text-2xl font-bold text-gray-900">
-              Can I order foodpanda for someone else?
-            </h2>
-            <p className="text-zinc-500">
-              Yes, foodpanda Pakistan allows you to place an order for someone else. During checkout, just update the name and delivery address of the person you're ordering for. Please keep in mind that if the delivery details are not correct and the order cannot be delivered, we won't be able to process a refund.
-            </p>
+          <Typography variant="h5" sx={{ mt: 5, mb: 3, fontWeight: 'bold', color: 'text.primary' }}>
+            Can I order foodpanda for someone else?
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', mb: 3 }}>
+            Yes, foodpanda Pakistan allows you to place an order for someone else. During checkout, just update the name and delivery address of the person you're ordering for. Please keep in mind that if the delivery details are not correct and the order cannot be delivered, we won't be able to process a refund.
+          </Typography>
 
-            <h2 className="max-sm:text-sm mb-3 mt-5 w-full text-2xl font-bold text-gray-900">
-              How much does foodpanda charge for delivery?
-            </h2>
-            <p className="text-zinc-500">
-              Delivery fee charged by foodpanda in Pakistan depends on many operational factors, most of all - location and the restaurant you are ordering from. You can always check the delivery fee while forming your order. Besides, you can filter the restaurants by clicking on the "Free Delivery" icon at the top of your restaurant listing.
-            </p>
+          <Typography variant="h5" sx={{ mt: 5, mb: 3, fontWeight: 'bold', color: 'text.primary' }}>
+            How much does foodpanda charge for delivery?
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', mb: 3 }}>
+            Delivery fee charged by foodpanda in Pakistan depends on many operational factors, most of all - location and the restaurant you are ordering from. You can always check the delivery fee while forming your order. Besides, you can filter the restaurants by clicking on the "Free Delivery" icon at the top of your restaurant listing.
+          </Typography>
 
-            <h2 className="max-sm:text-sm mb-3 mt-5 w-full text-2xl font-bold text-gray-900">
-              What restaurants let you order online?
-            </h2>
-            <p className="text-zinc-500">
-              There are hundreds of restaurants on foodpanda Pakistan that let you order online. For example, KFC, McDonald's, Pizza Hut, OPTP, Hardee's, Domino's, Kababjees, and many more! In order to check all the restaurants near you that deliver, just type in your address and discover all the available places.
-            </p>
+          <Typography variant="h5" sx={{ mt: 5, mb: 3, fontWeight: 'bold', color: 'text.primary' }}>
+            What restaurants let you order online?
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', mb: 3 }}>
+            There are hundreds of restaurants on foodpanda Pakistan that let you order online. For example, KFC, McDonald's, Pizza Hut, OPTP, Hardee's, Domino's, Kababjees, and many more! In order to check all the restaurants near you that deliver, just type in your address and discover all the available places.
+          </Typography>
 
-            <h2 className="max-sm:text-sm mb-3 mt-5 w-full text-2xl font-bold text-gray-900">
-              Does foodpanda have minimum order?
-            </h2>
-            <p className="text-zinc-500">
-              Yes, many restaurants have a minimum order. The minimum order value depends on the restaurant you order from and is indicated during your ordering process.
-            </p>
+          <Typography variant="h5" sx={{ mt: 5, mb: 3, fontWeight: 'bold', color: 'text.primary' }}>
+            Does foodpanda have minimum order?
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', mb: 3 }}>
+            Yes, many restaurants have a minimum order. The minimum order value depends on the restaurant you order from and is indicated during your ordering process.
+          </Typography>
 
-            <h2 className="max-sm:text-sm mb-3 mt-5 w-full text-2xl font-bold text-gray-900">
-              What is the difference between delivery and Pick-Up?
-            </h2>
-            <p className="text-zinc-500">
-              If you choose delivery, a foodpanda rider will collect your order from the restaurant and take it to your chosen delivery address. If you choose Pick-Up, you can takeaway your food directly from the restaurant for extra savings – and to jump to the front of the queue. Pick-Up orders are available for restaurants only.
-            </p>
+          <Typography variant="h5" sx={{ mt: 5, mb: 3, fontWeight: 'bold', color: 'text.primary' }}>
+            What is the difference between delivery and Pick-Up?
+          </Typography>
+          <Typography sx={{ color: 'text.secondary', mb: 3 }}>
+            If you choose delivery, a foodpanda rider will collect your order from the restaurant and take it to your chosen delivery address. If you choose Pick-Up, you can takeaway your food directly from the restaurant for extra savings – and to jump to the front of the queue. Pick-Up orders are available for restaurants only.
+          </Typography>
 
-            <h2 className="max-sm:text-sm mb-3 mt-5 w-full text-2xl font-bold text-gray-900">
-              Order food and groceries online with foodpanda now and enjoy a great dining experience!
-            </h2>
-          </div>
-        </Container>
-      </div>
-    </div>
+          <Typography variant="h5" sx={{ mt: 5, mb: 3, fontWeight: 'bold', color: 'text.primary' }}>
+            Order food and groceries online with foodpanda now and enjoy a great dining experience!
+          </Typography>
+        </Box>
+      </Container>
+    </Box>
+    </Box>
   );
 };
 
