@@ -18,19 +18,18 @@ import {
 } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart, removeFromCart, clearCart } from '../../redux/cartSlice';
-import { useNavigate } from 'react-router-dom'; // Importing useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const CartDrawer = ({ open, onClose }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const { items, totalAmount, totalQuantity } = useSelector((state) => state.cart);
 
   console.log('Cart State:', { items, totalAmount, totalQuantity });
 
-  // Navigate to delivery page on checkout
   const handleCheckout = () => {
-    dispatch(clearCart()); // Clear the cart before navigating
-    navigate('/delivery'); // Navigate to the delivery page
+    dispatch(clearCart());
+    navigate('/delivery');
   };
 
   return (
@@ -47,11 +46,10 @@ const CartDrawer = ({ open, onClose }) => {
       }}
     >
       <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-        {/* Header */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <CartIcon />
-            <Typography variant="h6">Shopping Cart ({totalQuantity})</Typography>
+            <Typography variant="h6">Shopping Cart ({items.length})</Typography>
           </Box>
           <IconButton onClick={onClose} size="small">
             <CloseIcon />
@@ -60,7 +58,6 @@ const CartDrawer = ({ open, onClose }) => {
 
         <Divider />
 
-        {/* Cart Items */}
         {items.length > 0 ? (
           <List sx={{ flexGrow: 1, overflow: 'auto' }}>
             {items.map((item) => (
@@ -72,7 +69,6 @@ const CartDrawer = ({ open, onClose }) => {
                 }}
               >
                 <Box sx={{ display: 'flex', gap: 2, width: '100%' }}>
-                  {/* Item Image */}
                   <Box
                     component="img"
                     src={item.image}
@@ -85,7 +81,6 @@ const CartDrawer = ({ open, onClose }) => {
                     }}
                   />
 
-                  {/* Item Details */}
                   <Box sx={{ flexGrow: 1 }}>
                     <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
                       {item.name}
@@ -95,7 +90,6 @@ const CartDrawer = ({ open, onClose }) => {
                       Rs. {parseFloat(item.price.replace(/[^0-9.]/g, ''))}
                     </Typography>
 
-                    {/* Quantity Controls */}
                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, gap: 1 }}>
                       <IconButton
                         size="small"
@@ -115,7 +109,6 @@ const CartDrawer = ({ open, onClose }) => {
                     </Box>
                   </Box>
 
-                  {/* Item Total */}
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                     <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
                       Rs. {item.totalPrice}
@@ -123,7 +116,7 @@ const CartDrawer = ({ open, onClose }) => {
                     <IconButton
                       size="small"
                       color="error"
-                      onClick={() => dispatch(removeFromCart(item.id))} // Remove item from cart
+                      onClick={() => dispatch(removeFromCart(item.id))}
                       sx={{ mt: 1 }}
                     >
                       <DeleteIcon />
@@ -151,7 +144,6 @@ const CartDrawer = ({ open, onClose }) => {
           </Box>
         )}
 
-        {/* Footer */}
         {items.length > 0 && (
           <Box sx={{ mt: 2 }}>
             <Divider />

@@ -53,10 +53,11 @@ export default function HeroSection() {
             }}
           >
             It's the food and groceries{" "}
-            <span style={{ color: "#e21b70" }}>you love</span>,{" "}
-            <br />
-            delivered
+            <span style={{ whiteSpace: "nowrap" }}>
+              <span style={{ color: "#e21b70" }}>you love</span>, delivered
+            </span>
           </Typography>
+
 
           {/* Search Box */}
           <Box

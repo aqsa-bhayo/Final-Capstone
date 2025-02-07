@@ -13,8 +13,8 @@ const cartSlice = createSlice({
     addToCart: (state, action) => {
       const newItem = action.payload;
       const existingItem = state.items.find(item => item.id === newItem.id);
-      
-      // Parse the price directly since it's now stored without "Rs."
+
+      // Parse price as a number
       const price = parseFloat(newItem.price);
 
       if (!existingItem) {
@@ -28,17 +28,10 @@ const cartSlice = createSlice({
         existingItem.totalPrice = existingItem.quantity * price;
       }
 
-      // Update totals
       state.totalQuantity = state.items.reduce((total, item) => total + item.quantity, 0);
       state.totalAmount = state.items.reduce((total, item) => total + item.totalPrice, 0);
-      
-      // Debug log
-      console.log('Updated Cart State:', {
-        items: state.items,
-        totalQuantity: state.totalQuantity,
-        totalAmount: state.totalAmount
-      });
     },
+
     removeFromCart: (state, action) => {
       const id = action.payload;
       const existingItem = state.items.find(item => item.id === id);
@@ -47,12 +40,13 @@ const cartSlice = createSlice({
         state.items = state.items.filter(item => item.id !== id);
       } else {
         existingItem.quantity--;
-        existingItem.totalPrice = existingItem.quantity * parseFloat(existingItem.price.replace('Rs. ', ''));
+        existingItem.totalPrice = existingItem.quantity * parseFloat(existingItem.price);
       }
 
       state.totalQuantity = state.items.reduce((total, item) => total + item.quantity, 0);
       state.totalAmount = state.items.reduce((total, item) => total + item.totalPrice, 0);
     },
+
     clearCart: (state) => {
       state.items = [];
       state.totalQuantity = 0;

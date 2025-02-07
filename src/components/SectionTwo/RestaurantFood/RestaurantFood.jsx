@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Burger from "../../../assets/burger.jpg";
+// import Burger from "../../../assets/burger.jpg";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
 import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
-import { addFavorite } from "../../../redux/productsSlice";
+// import { addFavorite } from "../../../redux/productsSlice";
 import { addToCart } from "../../../redux/cartSlice";
 import sandwichImage from '../../../assets/sendwichch.jpg';
 import cheesyFriesImage from '../../../assets/cheesy fries.jpg';
@@ -31,7 +31,7 @@ import cocoColaImage from '../../../assets/coco cola.jpg';
 import spriteImage from '../../../assets/sprite.jpg';
 import fantaImage from '../../../assets/fanta.jpg';
 import AddIcon from '@mui/icons-material/Add';
-import { Tooltip } from "@mui/material";
+// import { Tooltip } from "@mui/material";
 import { Snackbar, Alert } from '@mui/material';
 
 
